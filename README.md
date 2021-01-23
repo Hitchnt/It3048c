@@ -1,7 +1,5 @@
 # WeatherNotice
-
 ---
-
 Tyler Hitchner, Adam Holt, Oliver Lu
 
 ## Introduction
