@@ -11,12 +11,13 @@ Ever need to know if you need to put the pool cover on so it is not too cold to 
  
  ## 2. Storyboard
  
- somthing here
-  somthing here
-   somthing here
+What locations are to be recorded?
+What weather and temperatures are we looking for?
+What message do you want to display for the alert?
+
    
 ## 3. Functional Requirements
-
+Use of phone GPS to know user locations
 ###  Get weather forcast and alerts for desired locations
 
 #### Scenario
@@ -31,7 +32,14 @@ I want an app to inform me of ever changing weather and to alert me if a certain
 
 ## 4. Class Diagram
 
+![ClassDiagram](https://user-images.githubusercontent.com/56658191/105645269-91c2bb00-5e68-11eb-8b4b-ccf2b3389b50.png)
+
 ## 5. Class Diagram Description
+Use of phone GPS to know user current location.
+Be able to send push notifications.
+Be able to get weather api data.
+Store user information for each location as well was the type of weather and or temperatures to look out for.
+The display message the user stored to notify them of what currently happening. 
 
 ## 6. A Product Backlog
 
