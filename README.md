@@ -35,13 +35,15 @@ I want an app to inform me of ever changing weather and to alert me if a certain
 ![ClassDiagram](https://user-images.githubusercontent.com/56658191/105645297-b3bc3d80-5e68-11eb-80bd-d9786e4da104.png)
 
 ## 5. Class Diagram Description
-Use of phone GPS to know user current location.
-Be able to send push notifications.
-Be able to get weather api data.
-Store user information for each location as well was the type of weather and or temperatures to look out for.
-The display message the user stored to notify them of what currently happening. 
+- Main start off with use of phone GPS to know user current location.
+- Api need be able to get weather api data.
+- Database store user information for each location as well was the type of weather and or temperatures to look out for.
+- Logic figure out if a notifcation need to be sent out with display message the user stored to notify them of what currently happening. 
 
 ## 6. A Product Backlog
+
+Product the main goal and any extra functional to include, that are duable for this sesmster
+More in the https://github.com/Hitchnt/It3048c/projects/2
 
 ## 7. A scrum or kanban board, using GitHub projects (preferred), Trello, Scrumy.com, or something similar, that contains:
 https://github.com/Hitchnt/It3048c/projects/2
