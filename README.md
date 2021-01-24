@@ -32,7 +32,7 @@ I want an app to inform me of ever changing weather and to alert me if a certain
 
 ## 4. Class Diagram
 
-![ClassDiagram](https://user-images.githubusercontent.com/56658191/105645269-91c2bb00-5e68-11eb-8b4b-ccf2b3389b50.png)
+![ClassDiagram](https://user-images.githubusercontent.com/56658191/105645297-b3bc3d80-5e68-11eb-80bd-d9786e4da104.png)
 
 ## 5. Class Diagram Description
 Use of phone GPS to know user current location.
