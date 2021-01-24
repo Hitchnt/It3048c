@@ -17,7 +17,7 @@ Ever need to know if you need to put the pool cover on so it is not too cold to 
    
 ## 3. Functional Requirements
 
-### Requirement 100.0: Get weather forcast and alerts for desired locations
+###  Get weather forcast and alerts for desired locations
 
 #### Scenario
 As a person who want or need to track the weather in different locations or their own.
