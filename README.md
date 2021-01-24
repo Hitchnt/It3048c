@@ -15,7 +15,7 @@ What locations are to be recorded?
 What weather and temperatures are we looking for?
 What message do you want to display for the alert?
 
-   
+![ClassDiagram](https://cdn.discordapp.com/attachments/800777529761333318/801983606317645864/unknown.png)
 ## 3. Functional Requirements
 Use of phone GPS to know user locations
 ###  Get weather forcast and alerts for desired locations
