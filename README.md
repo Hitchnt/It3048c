@@ -36,7 +36,7 @@ I want an app to inform me of ever changing weather and to alert me if a certain
 ## 6. A Product Backlog
 
 ## 7. A scrum or kanban board, using GitHub projects (preferred), Trello, Scrumy.com, or something similar, that contains:
-
+https://github.com/Hitchnt/It3048c/projects/2
 
 ## 8.Scrum Roles
 
