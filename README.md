@@ -11,11 +11,11 @@ Ever need to know if you need to put the pool cover on so it is not too cold to 
  
  ## 2. Storyboard
  
-What locations are to be recorded?
-What weather and temperatures are we looking for?
-What message do you want to display for the alert?
+ 
+Link: [Storyboard](https://projects.invisionapp.com/prototype/ckkbtob2p00efe701f83r6ter/play)
 
-![ClassDiagram](https://cdn.discordapp.com/attachments/800777529761333318/801983606317645864/unknown.png)
+![image1](https://github.com/OliverPo666/image-for-weather-notice/blob/main/1.png)
+   
 ## 3. Functional Requirements
 Use of phone GPS to know user locations
 ###  Get weather forcast and alerts for desired locations
