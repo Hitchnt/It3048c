@@ -17,17 +17,53 @@ Link: [Storyboard](https://projects.invisionapp.com/prototype/ckkbtob2p00efe701f
 ![image1](https://github.com/OliverPo666/image-for-weather-notice/blob/main/1.png)
    
 ## 3. Functional Requirements
-Use of phone GPS to know user locations
-Notifcation to user when weather is outside user requirements 
-Up to date weathe status of user set Location
-###  Get weather forcast and alerts for desired locations
+
+Given feed of weather data 
+When the location is lower 70 degree 
+Then I should receive a push notification to cover the pool: 
+
+Message: Cover pool with pool cover
+Reason: Current temperature is lower then set parameters
+
+
+
+Given feed of weather data 
+When future temperature is lower then what the set parameters are
+Then I should receive a push notification to cover the plants outside 
+
+Message: Cover plants to keep them alive
+Reason: future temperature is lower then set parameters
+
+Given feed of weather data 
+When I search for the zip code for 45236 
+Then I should receive the weather data
+
+Temperature: 70 degree
+Weather Type: Sunny
+precipitation : 45%
+Humidity: 67%
+Wind: 14mph
+City: Cincinnati
+State: Ohio
+County: USA
+
+Given the weather data
+When I search for the zip code for "5htdj" ( not a real zip code)
+Then I should receive no results”
+
+
+
+-Use of phone GPS to know user locations
+-Notification to user when weather is outside user requirements 
+-Up to date weather status of user set Location
+###  Get weather forecast and alerts for desired locations
 
 #### Scenario
-As a user who want or need to track the weather in different locations or their own.
-User can be informed of ever changing weather and to alert me if a certain location are experience undesirable weather.
+As a user who wants or needs to track the weather in different locations or their own.
+Users can be informed of ever changing weather and to alert me if a certain location are experience undesirable weather.
 
-- its going a cool and may want put the pool cover up to keep it warm for later use.
-- when snowing to alert me I need start leave early for work to clean off car of snow and prepare for unwanted road conditions.
+- it's going to be cool and may want to put the pool cover up to keep it warm for later use.
+- when snowing to alert me I need to start leave early for work to clean off the snow and prepare for unwanted road conditions.
 - Then alert me the it is freezing and I need take in the plants inside to keep alive
 
 
@@ -39,11 +75,11 @@ User can be informed of ever changing weather and to alert me if a certain locat
 - Main start off with use of phone GPS to know user current location.
 - Api need be able to get weather api data.
 - Database store user information for each location as well was the type of weather and or temperatures to look out for.
-- Logic figure out if a notifcation need to be sent out with display message the user stored to notify them of what currently happening. 
+- Logic figure out if a notification need to be sent out with display message the user stored to notify them of what currently happening. 
 
 ## 6. A Product Backlog
 
-Product the main goal and any extra functional to include, that are duable for this sesmster
+Product the main goal and any extra functional to include, that are durable for this semester
 More in the https://github.com/Hitchnt/It3048c/projects/2
 
 ## 7. A scrum or kanban board, using GitHub projects (preferred), Trello, Scrumy.com, or something similar, that contains:
@@ -59,4 +95,5 @@ https://github.com/Hitchnt/It3048c/projects/2
 ## 9. Link to WebEx for your 8:00 Sunday group stand up.  If you choose a different tool and/or different time, that's fine, just indicate it in the document.
 
 
-We are using Discord weekly for our standup
+We are using Discord weekly for our standup.
+
