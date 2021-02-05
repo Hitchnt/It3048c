@@ -27,17 +27,18 @@ Link: [Storyboard](https://projects.invisionapp.com/prototype/ckkbtob2p00efe701f
 
 - Reason: Current temperature is lower then set parameters
 
+1.2  
+**Given** feed of weather data  <br />
+**When** future temperature is lower then what the set parameters are <br />
+**Then** I should receive a push notification to cover the plants outside 
 
-<br /> Given feed of weather data 
-<br /> When future temperature is lower then what the set parameters are
-<br /> Then I should receive a push notification to cover the plants outside 
+- Message: Cover plants to keep them alive
+- Reason: future temperature is lower then set parameters
 
-<br /> Message: Cover plants to keep them alive
-<br /> Reason: future temperature is lower then set parameters
-
-<br /> Given feed of weather data 
-<br /> When I search for the zip code for 45236 
-<br /> Then I should receive the weather data
+1.3
+**Given** feed of weather data  <br />
+**When** I search for the zip code for 45236 <br />
+**Then** Then I should receive the weather data
 
 - Temperature: 70 degree
 - Weather Type: Sunny
@@ -48,15 +49,15 @@ Link: [Storyboard](https://projects.invisionapp.com/prototype/ckkbtob2p00efe701f
 - State: Ohio
 - County: USA
 
--Given the weather data
--When I search for the zip code for "5htdj" ( not a real zip code)
--Then I should receive no results”
-
-
+1.4 
+**Given** the weather data  <br />
+**When** I search for the zip code for "5htdj" ( not a real zip code)  <br />
+**Then** I should receive no results
 
 -Use of phone GPS to know user locations
 -Notification to user when weather is outside user requirements 
 -Up to date weather status of user set Location
+
 ###  Get weather forecast and alerts for desired locations
 
 #### Scenario
