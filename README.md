@@ -57,7 +57,7 @@ Link: [Storyboard](https://projects.invisionapp.com/prototype/ckkbtob2p00efe701f
 - Notification to user when weather is outside user requirements 
 - Up to date weather status of user set Location
 
-###  Get weather forecast and alerts for desired locations
+### Requirement 101: Get weather forecast and alerts for desired locations
 
 #### Scenario
 As a user who wants or needs to track the weather in different locations or their own.
