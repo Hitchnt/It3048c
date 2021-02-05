@@ -18,26 +18,27 @@ Link: [Storyboard](https://projects.invisionapp.com/prototype/ckkbtob2p00efe701f
    
 ## 3. Functional Requirements
 
- Given feed of weather data 
-<br />When the location is lower 70 degree 
-<br />Then I should receive a push notification to cover the pool: 
-<br />
+#### Examples
+1.1  
+**Given** feed of weather data 
+**When** the location is lower 70 degree 
+**Then** I should receive a push notification to cover the pool: 
+
 Message: Cover pool with pool cover
-<br />
+
 Reason: Current temperature is lower then set parameters
 
 
+<br /> Given feed of weather data 
+<br /> When future temperature is lower then what the set parameters are
+<br /> Then I should receive a push notification to cover the plants outside 
 
-- Given feed of weather data 
-- When future temperature is lower then what the set parameters are
-- Then I should receive a push notification to cover the plants outside 
+<br /> Message: Cover plants to keep them alive
+<br /> Reason: future temperature is lower then set parameters
 
-- Message: Cover plants to keep them alive
-- Reason: future temperature is lower then set parameters
-
-- Given feed of weather data 
-- When I search for the zip code for 45236 
-- Then I should receive the weather data
+<br /> Given feed of weather data 
+<br /> When I search for the zip code for 45236 
+<br /> Then I should receive the weather data
 
 - Temperature: 70 degree
 - Weather Type: Sunny
