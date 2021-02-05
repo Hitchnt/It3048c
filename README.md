@@ -24,7 +24,6 @@ Link: [Storyboard](https://projects.invisionapp.com/prototype/ckkbtob2p00efe701f
 **When** the location is lower 70 degree  <br />
 **Then** I should receive a push notification to cover the pool: 
 - Message: Cover pool with pool cover
-
 - Reason: Current temperature is lower then set parameters
 
 1.2  
