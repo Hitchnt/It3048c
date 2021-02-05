@@ -34,7 +34,7 @@ Link: [Storyboard](https://projects.invisionapp.com/prototype/ckkbtob2p00efe701f
 - Message: Cover plants to keep them alive
 - Reason: future temperature is lower then set parameters
 
-1.3
+1.3 <br />
 **Given** feed of weather data  <br />
 **When** I search for the zip code for 45236 <br />
 **Then** Then I should receive the weather data
