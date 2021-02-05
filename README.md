@@ -18,38 +18,38 @@ Link: [Storyboard](https://projects.invisionapp.com/prototype/ckkbtob2p00efe701f
    
 ## 3. Functional Requirements
 
-Given feed of weather data 
-When the location is lower 70 degree 
-Then I should receive a push notification to cover the pool: 
+-Given feed of weather data 
+-When the location is lower 70 degree 
+-Then I should receive a push notification to cover the pool: 
 
-Message: Cover pool with pool cover
-Reason: Current temperature is lower then set parameters
+-Message: Cover pool with pool cover
+-Reason: Current temperature is lower then set parameters
 
 
 
-Given feed of weather data 
-When future temperature is lower then what the set parameters are
-Then I should receive a push notification to cover the plants outside 
+-Given feed of weather data 
+-When future temperature is lower then what the set parameters are
+-Then I should receive a push notification to cover the plants outside 
 
-Message: Cover plants to keep them alive
-Reason: future temperature is lower then set parameters
+-Message: Cover plants to keep them alive
+-Reason: future temperature is lower then set parameters
 
-Given feed of weather data 
-When I search for the zip code for 45236 
-Then I should receive the weather data
+-Given feed of weather data 
+-When I search for the zip code for 45236 
+-Then I should receive the weather data
 
-Temperature: 70 degree
-Weather Type: Sunny
-precipitation : 45%
-Humidity: 67%
-Wind: 14mph
-City: Cincinnati
-State: Ohio
-County: USA
+-Temperature: 70 degree
+-Weather Type: Sunny
+-precipitation : 45%
+-Humidity: 67%
+-Wind: 14mph
+-City: Cincinnati
+-State: Ohio
+-County: USA
 
-Given the weather data
-When I search for the zip code for "5htdj" ( not a real zip code)
-Then I should receive no results”
+-Given the weather data
+-When I search for the zip code for "5htdj" ( not a real zip code)
+-Then I should receive no results”
 
 
 
