@@ -54,9 +54,9 @@ Link: [Storyboard](https://projects.invisionapp.com/prototype/ckkbtob2p00efe701f
 **When** I search for the zip code for "5htdj" ( not a real zip code)  <br />
 **Then** I should receive no results
 
--Use of phone GPS to know user locations
--Notification to user when weather is outside user requirements 
--Up to date weather status of user set Location
+- Use of phone GPS to know user locations
+- Notification to user when weather is outside user requirements 
+- Up to date weather status of user set Location
 
 ###  Get weather forecast and alerts for desired locations
 
