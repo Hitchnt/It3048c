@@ -20,8 +20,8 @@ Link: [Storyboard](https://projects.invisionapp.com/prototype/ckkbtob2p00efe701f
 
 #### Examples
 1.1  
-**Given** feed of weather data 
-**When** the location is lower 70 degree 
+**Given** feed of weather data  <br />
+**When** the location is lower 70 degree  <br />
 **Then** I should receive a push notification to cover the pool: 
 - Message: Cover pool with pool cover
 
