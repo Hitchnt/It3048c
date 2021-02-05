@@ -48,7 +48,7 @@ Link: [Storyboard](https://projects.invisionapp.com/prototype/ckkbtob2p00efe701f
 - State: Ohio
 - County: USA
 
-1.4 
+1.4 <br /> 
 **Given** the weather data  <br />
 **When** I search for the zip code for "5htdj" ( not a real zip code)  <br />
 **Then** I should receive no results
