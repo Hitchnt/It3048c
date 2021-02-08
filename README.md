@@ -46,7 +46,7 @@ Link: [Storyboard](https://projects.invisionapp.com/prototype/ckkbtob2p00efe701f
 - Wind: 14mph
 - City: Cincinnati
 - State: Ohio
-- County: USA
+- Country: USA
 
 1.4 <br /> 
 **Given** the weather data  <br />
@@ -70,7 +70,8 @@ Users can be informed of ever changing weather and to alert me if a certain loca
 
 ## 4. Class Diagram
 
-![ClassDiagram](https://user-images.githubusercontent.com/56658191/105645297-b3bc3d80-5e68-11eb-80bd-d9786e4da104.png)
+![WeatherNoticeUML](https://user-images.githubusercontent.com/60677383/107177640-4946e980-69a0-11eb-93f9-2933a4698860.png)
+
 
 ## 5. Class Diagram Description
 - Main start off with use of phone GPS to know user current location.
