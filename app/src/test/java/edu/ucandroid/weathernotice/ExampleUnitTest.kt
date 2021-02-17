@@ -18,7 +18,7 @@ class ExampleUnitTest {
     }
     @Test
     fun subtract_isCorrect() {
-        assertEquals(0, 2 - 2)
+        assertEquals(1, 3 - 2)
     }
     @Test
     fun callJson_gotData() {
