@@ -1,8 +1,14 @@
 package edu.ucandroid.weathernotice
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import edu.ucandroid.weathernotice.dto.Weather
+import edu.ucandroid.weathernotice.ui.main.MainViewModel
 import org.junit.Test
 
 import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Rule
+import org.junit.rules.TestRule
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -12,22 +18,54 @@ import java.net.URL
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+    @get:Rule
+    var rule: TestRule = InstantTaskExecutorRule()
+    lateinit var mvm: MainViewModel
+
+    @Before
+    fun populateCountries() {
+        mvm = MainViewModel()
+
+    }
+
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+
     @Test
-    fun subtract_isCorrect() {
-        assertEquals(1, 3 - 2)
+    fun countryDTO_maintainsState() {
+        var weather = Weather("US", "cincinnati")
+        assertTrue(weather.countryCode.equals("US"))
+        assertTrue(weather.city.equals("cincinnati"))
     }
     @Test
-    fun callJson_gotData() {
-        println("Getting json data")
-        data class weather(val description:String)
-
-        var url ="https://api.weatherbit.io/v2.0/current?&city=Cincinnati&country=USA&key=66af4499735e4bcc914957a0354de0b2"
-
-       // val connection = URL(url[0]).openConnection() as HttpURLConnection
+    fun weatherDTO_containsCincinnati() {
+        givenViewModelIsInitialized()
+        whenJSONDataAreReadAndParsed()
+        thenResultsShouldContainBelize()
+    }
+    private fun givenViewModelIsInitialized() {
 
     }
+
+    private fun whenJSONDataAreReadAndParsed() {
+        mvm.fetchWeatherLocations()
+    }
+
+
+
+    private fun thenResultsShouldContainBelize() {
+        var containsCincinnati:Boolean = false
+        mvm.weatherLocations.observeForever {
+            it.forEach {
+                if (it.city.equals("Cincinnati")) {
+                    containsCincinnati = true
+                }
+            }
+            assertTrue(containsCincinnati)
+        }
+    }
+
 }
