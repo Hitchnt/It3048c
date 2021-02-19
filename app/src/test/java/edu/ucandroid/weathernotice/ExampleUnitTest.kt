@@ -54,7 +54,14 @@ class ExampleUnitTest {
         mvm.fetchWeatherLocations()
     }
 
+    private fun getUserCurrentGpsLocation() {
+        //ToDO
+    }
 
+    private fun printEachUserLocation() {
+        //ToDO
+        println("")
+    }
 
     private fun thenResultsShouldContainBelize() {
         var containsCincinnati:Boolean = false
