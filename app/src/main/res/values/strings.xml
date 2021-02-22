@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WeatherNotice</string>
+    <string name="cityname">City</string>
+    <string name="weather">Weather</string>
+    <string name="zoretemperature">0.0</string>
+    <string name="fahandcel">℉</string>
 </resources>
