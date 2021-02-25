@@ -78,12 +78,12 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="156dp"
+                android:layout_height="154dp"
                 android:layout_marginTop="1dp"
-                android:layout_marginEnd="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/cloud" />
 
             <TextView
                 android:id="@+id/country"
