@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AutoCompleteTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginEnd">80dp</item>
+        <item name="android:ems">10</item>
+        <item name="android:inputType">textPersonName</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorHint">#FDFCFC</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+</resources>
