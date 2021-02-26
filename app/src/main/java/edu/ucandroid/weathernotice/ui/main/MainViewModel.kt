@@ -15,17 +15,14 @@ class MainViewModel : ViewModel() {
     var locationinfos: MutableLiveData<ArrayList<LocationInfo>> = MutableLiveData<ArrayList<LocationInfo>>()
     var locationService: LocationService = LocationService()
     init{
-        fetchLocations("e")
+        fetchLocations()
     }
 
     // TODO: Implement the ViewModel
 
 
     fun fetchLocations() {
-        locationinfos = locationService.fetchAllLocation();
+        locationinfos = locationService.fetchLocation();
     }
 
-    fun fetchLocations(locationName: String) {
-        locationinfos = locationService.fetchLocation(locationName);
-    }
 }

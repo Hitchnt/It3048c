@@ -44,7 +44,7 @@ class ExampleUnitTest {
     fun weatherDTO_containsCincinnati() {
         givenViewModelIsInitialized()
         whenJSONDataAreReadAndParsed()
-        thenResultsShouldContainBelize()
+        thenResultsShouldContainCincinnati()
     }
     private fun givenViewModelIsInitialized() {
 
@@ -63,7 +63,7 @@ class ExampleUnitTest {
         println("")
     }
 
-    private fun thenResultsShouldContainBelize() {
+    private fun thenResultsShouldContainCincinnati() {
         var containsCincinnati:Boolean = false
         mvm.locationinfos.observeForever {
             it.forEach {
