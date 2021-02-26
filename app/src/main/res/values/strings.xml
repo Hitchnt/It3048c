@@ -4,4 +4,26 @@
     <string name="weather">Weather</string>
     <string name="zoretemperature">0.0</string>
     <string name="fahandcel">℉</string>
+    <string name="date_time">Date / Time</string>
+    <string name="country">Country</string>
+    <string name="enter_city_name">Enter City Name</string>
+    <string name="city">City</string>
+    <string name="longitude">: Longitude</string>
+    <string name="latitude">: Latitude</string>
+    <string name="humidity">: Humidity</string>
+    <string name="sunrise">: Sunrise</string>
+    <string name="sunset">: Sunset</string>
+    <string name="pressure">: Pressure</string>
+    <string name="wind_speed">: Wind Speed</string>
+    <string name="tLatitude">Latitude</string>
+    <string name="tLongitude">Longitude</string>
+    <string name="tWind_speed">Wind Speed</string>
+    <string name="tHumidity">Humidity</string>
+    <string name="tSunrise">Sunrise</string>
+    <string name="tSunset">Sunset</string>
+    <string name="tPressure">Pressure</string>
+    <string name="tFeels_like">Feels Like</string>
+    <string name="feels_like">: Feels Like</string>
+    <string name="temperature">Temperature</string>
+    <string name="weather_notice">Weather Notice</string>
 </resources>
