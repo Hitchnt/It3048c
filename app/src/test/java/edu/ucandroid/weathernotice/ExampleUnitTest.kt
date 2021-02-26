@@ -1,10 +1,10 @@
 package edu.ucandroid.weathernotice
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import edu.ucandroid.weathernotice.dto.LocationInfo
 import edu.ucandroid.weathernotice.dto.Weather
 import edu.ucandroid.weathernotice.ui.main.MainViewModel
 import org.junit.Test
-
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -28,17 +28,17 @@ class ExampleUnitTest {
 
     }
 
-    @Test
+    //@Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
 
 
-    @Test
+    //@Test
     fun countryDTO_maintainsState() {
-        var weather = Weather("US", "cincinnati")
-        assertTrue(weather.countryCode.equals("US"))
-        assertTrue(weather.city.equals("cincinnati"))
+        var locationInfo = LocationInfo("US", "cincinnati","",null)
+        assertTrue(locationInfo.countryCode.equals("US"))
+        assertTrue(locationInfo.city.equals("cincinnati"))
     }
     @Test
     fun weatherDTO_containsCincinnati() {
@@ -51,7 +51,7 @@ class ExampleUnitTest {
     }
 
     private fun whenJSONDataAreReadAndParsed() {
-        mvm.fetchWeatherLocations()
+        mvm.fetchLocations()
     }
 
     private fun getUserCurrentGpsLocation() {
@@ -65,7 +65,7 @@ class ExampleUnitTest {
 
     private fun thenResultsShouldContainBelize() {
         var containsCincinnati:Boolean = false
-        mvm.weatherLocations.observeForever {
+        mvm.locationinfos.observeForever {
             it.forEach {
                 if (it.city.equals("Cincinnati")) {
                     containsCincinnati = true

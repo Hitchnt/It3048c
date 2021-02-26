@@ -11,7 +11,7 @@ object RetrofitClientInstance {
     private var retrofit: Retrofit? = null;
 
     private val BASE_URL = "https://api.weatherbit.io/"
-
+    private val BASELOCATION_URL = "https://gist.githubusercontent.com/"
     /**
      * the ? at the end of retrofit just means it can be null
      */
@@ -21,7 +21,7 @@ object RetrofitClientInstance {
             if (retrofit == null) {
                 // create it!
                 retrofit = retrofit2.Retrofit.Builder()
-                        .baseUrl(BASE_URL)
+                        .baseUrl(BASELOCATION_URL)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build()
             }
