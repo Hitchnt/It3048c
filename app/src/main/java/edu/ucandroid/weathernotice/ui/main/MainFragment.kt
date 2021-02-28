@@ -67,32 +67,15 @@ class MainFragment : Fragment() {
         locationRequest.fastestInterval = 5000
 
         mFusedLocationProviderClient = FusedLocationProviderClient( context!!)
-        if (ContextCompat.checkSelfPermission(
-                        context!!,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(
-                        context!!, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
 
-        mFusedLocationProviderClient.requestLocationUpdates(
-                locationRequest, mLocationCallback,
-                Looper.myLooper()
-        )
 
         if (ContextCompat.checkSelfPermission(
                         context!!,
-                        Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                        Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
                         context!!,
-                        Manifest.permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED)
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+             ) != PackageManager.PERMISSION_GRANTED)
 
         {
             // TODO: Consider calling
