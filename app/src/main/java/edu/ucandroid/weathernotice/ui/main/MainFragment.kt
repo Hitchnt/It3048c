@@ -1,7 +1,6 @@
 package edu.ucandroid.weathernotice.ui.main
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -13,7 +12,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import edu.ucandroid.weathernotice.R
@@ -28,7 +26,7 @@ class MainFragment : Fragment() {
     }
 
     lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
-    val locationRequestId = 100
+    val LOCATION_REQUEST_ID = 100
 
     private lateinit var viewModel: MainViewModel
 
@@ -97,7 +95,7 @@ class MainFragment : Fragment() {
     var mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(p0: LocationResult) {
 
-            var location: Location = p0.lastLocation
+            val location: Location = p0.lastLocation
 
             updateAddressUI(location)
 
@@ -106,17 +104,16 @@ class MainFragment : Fragment() {
 
     fun updateAddressUI(location: Location) {
 
-        var geocoder: Geocoder
-        var addressList = ArrayList<Address>()
+        val geocoder: Geocoder
 
         geocoder = Geocoder(activity!!.applicationContext, Locale.getDefault())
 
-        addressList = geocoder.getFromLocation(
+        var addressList = geocoder.getFromLocation(
                 location.latitude,
                 location.longitude,
                 1
         ) as ArrayList<Address>
-        enterCityname.setText(addressList.get(0).getAddressLine(0))
+        enterCityname.setText(addressList[0].getAddressLine(0))
         //enterCityname.text= addressList.get(0).getAddressLine(0)
 
 
@@ -140,7 +137,7 @@ class MainFragment : Fragment() {
     fun askLocationPermission() {
 
         requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                locationRequestId)
+                LOCATION_REQUEST_ID)
 
 
     }
@@ -152,7 +149,7 @@ class MainFragment : Fragment() {
             grantResults: IntArray
     ) {
 
-        if (requestCode == locationRequestId) {
+        if (requestCode == LOCATION_REQUEST_ID) {
 
             if (grantResults != null && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 

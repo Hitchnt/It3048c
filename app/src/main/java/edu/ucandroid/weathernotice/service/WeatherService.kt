@@ -12,7 +12,7 @@ import retrofit2.Response
 class WeatherService {
 
     fun fetchAllWeather() : MutableLiveData<ArrayList<Weather>> {
-        var _weather = MutableLiveData<ArrayList<Weather>>()
+        val weather = MutableLiveData<ArrayList<Weather>>()
         val service = RetrofitClientInstance.retrofitInstance?.create(IWeatherDAO::class.java)
         val call = service?.getAllWeather()
         call?.enqueue(object : Callback<ArrayList<Weather>> {
@@ -37,17 +37,17 @@ class WeatherService {
                     call: Call<ArrayList<Weather>>,
                     response: Response<ArrayList<Weather>>
             ) {
-                _weather.value = response.body()
+                weather.value = response.body()
             }
 
         })
-        return _weather
+        return weather
     }
 
-    fun fetchWeather(locationName: String) : MutableLiveData<ArrayList<Weather>> {
-        var _weather = MutableLiveData<ArrayList<Weather>>()
+    fun fetchWeatherByLocation(locationName: String) : MutableLiveData<ArrayList<Weather>> {
+        val weather = MutableLiveData<ArrayList<Weather>>()
         val service = RetrofitClientInstance.retrofitInstance?.create(IWeatherDAO::class.java)
-        val call = service?.getAllWeather()
+        val call = service?.getWeather(locationName)
         call?.enqueue(object : Callback<ArrayList<Weather>> {
             /**
              * Invoked when a network exception occurred talking to the server or when an unexpected
@@ -70,11 +70,11 @@ class WeatherService {
                     call: Call<ArrayList<Weather>>,
                     response: Response<ArrayList<Weather>>
             ) {
-                _weather.value = response.body()
+                weather.value = response.body()
             }
 
         })
-        return _weather
+        return weather
     }
 
 }
