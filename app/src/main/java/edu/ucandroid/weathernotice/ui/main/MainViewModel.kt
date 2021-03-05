@@ -16,7 +16,7 @@ class MainViewModel : ViewModel() {
     }
 
     // TODO: Implement the ViewModel
-    fun fetchWeatherLocations() {
+    fun fetchAllWeather() {
         weatherLocations = weatherService.fetchAllWeather();
     }
 
