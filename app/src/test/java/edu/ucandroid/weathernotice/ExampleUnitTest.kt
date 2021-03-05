@@ -46,23 +46,29 @@ class ExampleUnitTest {
         whenJSONDataAreReadAndParsed()
         thenResultsShouldContainBelize()
     }
+
+    @Test
     private fun givenViewModelIsInitialized() {
 
     }
 
+    @Test
     private fun whenJSONDataAreReadAndParsed() {
         mvm.fetchWeatherLocations()
     }
 
+    @Test
     private fun getUserCurrentGpsLocation() {
         //ToDO
     }
 
+    @Test
     private fun printEachUserLocation() {
         //ToDO
         println("")
     }
 
+    @Test
     private fun thenResultsShouldContainBelize() {
         var containsCincinnati:Boolean = false
         mvm.weatherLocations.observeForever {

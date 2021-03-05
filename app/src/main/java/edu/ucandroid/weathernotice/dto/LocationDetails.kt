@@ -1,4 +1,5 @@
 package edu.ucandroid.weathernotice.dto
 
-class LocationDetails {
+data class LocationDetails(val longitude: String, val latitude: String) {
+
 }
