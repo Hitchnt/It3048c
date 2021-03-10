@@ -62,8 +62,8 @@ class MainFragment : Fragment() {
 
     fun updateLocation() {
         var locationRequest = LocationRequest()
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = 10000
+        locationRequest.priority = LocationRequest.PRIORITY_LOW_POWER
+        locationRequest.interval = 60000
         locationRequest.fastestInterval = 5000
 
         mFusedLocationProviderClient = FusedLocationProviderClient( context!!)
