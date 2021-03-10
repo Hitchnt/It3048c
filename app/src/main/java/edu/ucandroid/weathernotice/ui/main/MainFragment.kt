@@ -28,7 +28,7 @@ class MainFragment : Fragment() {
     }
 
     lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
-    val locationRequestId = 100
+    private val locationRequestId = 100
 
     private lateinit var viewModel: MainViewModel
 
@@ -106,10 +106,9 @@ class MainFragment : Fragment() {
 
     fun updateAddressUI(location: Location) {
 
-        var geocoder: Geocoder
         var addressList = ArrayList<Address>()
 
-        geocoder = Geocoder(activity!!.applicationContext, Locale.getDefault())
+        var geocoder: Geocoder = Geocoder(activity!!.applicationContext, Locale.getDefault())
 
         addressList = geocoder.getFromLocation(
                 location.latitude,
