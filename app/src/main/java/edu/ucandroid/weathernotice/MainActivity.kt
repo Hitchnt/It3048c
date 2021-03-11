@@ -1,8 +1,11 @@
 package edu.ucandroid.weathernotice
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageButton
 import edu.ucandroid.weathernotice.ui.main.MainFragment
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,5 +18,12 @@ class MainActivity : AppCompatActivity() {
                     .replace(R.id.container, MainFragment.newInstance())
                     .commitNow()
         }
+
+        val button = findViewById<ImageButton>(R.id.btnList)
+        button.setOnClickListener {
+            val intent = Intent(this, MainActivity2::class.java)
+            startActivity(intent)
+        }
     }
+
 }
