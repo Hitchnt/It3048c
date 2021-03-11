@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginEnd="80dp"
+            android:layout_marginEnd="65dp"
             android:ems="10"
             android:hint="@string/enter_city_name"
             android:inputType="textPersonName"
@@ -35,11 +35,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:background="#95000000"
+            android:background="#3C54EE"
             android:padding="10dp"
             android:text="Search Weather"
             android:textColor="#FBFBFB"
@@ -54,10 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
             android:background="#6B0C0C0C"
             android:scrollbarSize="4dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -116,11 +112,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="60dp"
             android:background="#6B0C0C0C"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -345,12 +339,29 @@
 
         <ImageButton
             android:id="@+id/btnLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_width="56dp"
+            android:layout_height="47dp"
             app:layout_constraintStart_toEndOf="@+id/enterCityname"
             app:layout_constraintTop_toBottomOf="@+id/appTitle"
-            app:srcCompat="@android:drawable/ic_dialog_map" />
+            app:srcCompat="@drawable/ic_gps" />
+
+        <ImageButton
+            android:id="@+id/btnSave"
+            android:layout_width="67dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+            app:srcCompat="@drawable/ic_save" />
+
+        <ImageButton
+            android:id="@+id/btnList"
+            android:layout_width="67dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+            app:srcCompat="@drawable/ic_list" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
