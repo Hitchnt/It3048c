@@ -1,9 +1,7 @@
 package edu.ucandroid.weathernotice
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageButton
 import edu.ucandroid.weathernotice.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
