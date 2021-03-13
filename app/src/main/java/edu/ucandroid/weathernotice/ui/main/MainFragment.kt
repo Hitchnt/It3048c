@@ -1,5 +1,4 @@
 package edu.ucandroid.weathernotice.ui.main
-
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
@@ -17,7 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import edu.ucandroid.weathernotice.R
-import kotlinx.android.synthetic.main.main_activity.*
+import kotlinx.android.synthetic.main.main_fragment.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -36,7 +35,7 @@ class MainFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
 
 
-        return inflater.inflate(R.layout.main_activity, container, false)
+        return inflater.inflate(R.layout.main_fragment, container, false)
 
 
     }

@@ -5,6 +5,8 @@ import android.os.Bundle
 import edu.ucandroid.weathernotice.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -14,5 +16,4 @@ class MainActivity : AppCompatActivity() {
                     .commitNow()
         }
     }
-
 }
