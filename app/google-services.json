@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "867460537689",
+    "project_id": "weather-notice-a26f1",
+    "storage_bucket": "weather-notice-a26f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867460537689:android:f37031dbe709ece44d4048",
+        "android_client_info": {
+          "package_name": "edu.ucandroid.weathernotice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867460537689-pt5agc8uqpsam44ur1nbtp59tv3id574.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzarEV3BOCIk39WNFAosrBmtP766QkggI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "867460537689-pt5agc8uqpsam44ur1nbtp59tv3id574.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
