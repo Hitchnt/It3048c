@@ -20,8 +20,14 @@ import edu.ucandroid.weathernotice.R
 import kotlinx.android.synthetic.main.main_fragment.*
 import java.util.*
 import kotlin.collections.ArrayList
+import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseUser
+
 
 class MainFragment : Fragment() {
+
+    private var user : FirebaseUser? = null
+    private val AUTH_REQUEST_CODE = 2002
 
     companion object {
         fun newInstance() = MainFragment()
@@ -46,10 +52,31 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
         btnLocation.setOnClickListener {
-
+            saveString()
             getLocation()
+
         }
     }
+    private fun logon() {
+        var providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build(),
+            AuthUI.IdpConfig.GoogleBuilder().build()
+        )
+        startActivityForResult(
+            AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(), AUTH_REQUEST_CODE
+        )
+    }
+
+    private fun saveString() {
+       if(user == null) {
+       logon()
+    }
+      //  var reminder = Reminder().apply{
+
+      //  }
+       }
+
+
 
     fun getLocation() {
 
@@ -78,13 +105,7 @@ class MainFragment : Fragment() {
              ) != PackageManager.PERMISSION_GRANTED)
 
         {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             return
         }
         mFusedLocationProviderClient.requestLocationUpdates(

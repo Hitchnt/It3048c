@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -51,5 +52,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
 
+    implementation platform('com.google.firebase:firebase-bom:26.7.0')
+    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.firebase:firebase-analytics'
 }
