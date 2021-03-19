@@ -16,7 +16,7 @@ class LocationService {
     fun fetchLocation() : MutableLiveData<ArrayList<LocationInfo>> {
         var _locationInfo = MutableLiveData<ArrayList<LocationInfo>>()
         val service = RetrofitClientInstance.retrofitInstance?.create(ILocationDAO::class.java)
-        val call = service?.getAllWeather()
+        val call = service?.getAllLocations()
         call?.enqueue(object : Callback<ArrayList<LocationInfo>> {
             /**
              * Invoked when a network exception occurred talking to the server or when an unexpected

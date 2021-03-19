@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 
 data class LocationInfo(
-       // @SerializedName("country_code") var countryCode: String,
-        @SerializedName("city") var city: String)
-       // @SerializedName("lon") var lon: String?,
+        @SerializedName("country") var countryCode: String,
+        @SerializedName("name") var city: String)
+        //@SerializedName("lng") var lon: String?,
        // @SerializedName("lat") var lat: String?)
        {
 

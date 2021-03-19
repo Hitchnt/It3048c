@@ -10,8 +10,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClientInstance {
     private var retrofit: Retrofit? = null;
 
-    private val BASE_URL = "https://api.weatherbit.io/"
-    private val BASELOCATION_URL = "https://gist.githubusercontent.com"
+    private val BASE_URL = "https://api.weatherbit.io"
+    private val BASELOCATION_URL = "https://raw.githubusercontent.com"
     /**
      * the ? at the end of retrofit just means it can be null
      */

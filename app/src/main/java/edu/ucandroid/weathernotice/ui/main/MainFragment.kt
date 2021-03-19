@@ -34,6 +34,8 @@ class MainFragment : Fragment() {
                 locationinfos -> enterCityname.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, locationinfos))
         })
         viewModel.fetchLocations()
+
+        viewModel.fetchWeather()
     }
 
 
