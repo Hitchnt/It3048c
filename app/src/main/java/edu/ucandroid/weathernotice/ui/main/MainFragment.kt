@@ -1,6 +1,6 @@
 package edu.ucandroid.weathernotice.ui.main
 import android.Manifest
-import android.content.Context
+import android.app.TimePickerDialog
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import edu.ucandroid.weathernotice.R
@@ -33,11 +32,7 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-
-
         return inflater.inflate(R.layout.main_fragment, container, false)
-
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -45,7 +40,6 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
         btnLocation.setOnClickListener {
-
             getLocation()
         }
     }
@@ -65,18 +59,16 @@ class MainFragment : Fragment() {
         locationRequest.interval = 10000
         locationRequest.fastestInterval = 5000
 
-        mFusedLocationProviderClient = FusedLocationProviderClient( context!!)
+        mFusedLocationProviderClient = FusedLocationProviderClient(context!!)
 
 
         if (ContextCompat.checkSelfPermission(
                         context!!,
                         Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
                         context!!,
                         Manifest.permission.ACCESS_COARSE_LOCATION
-             ) != PackageManager.PERMISSION_GRANTED)
-
-        {
+                ) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -121,7 +113,6 @@ class MainFragment : Fragment() {
         enterCityname.setText(addressList[0].locality)
 
 
-
     }
 
 
@@ -161,7 +152,5 @@ class MainFragment : Fragment() {
                 getLocation()
             }
         }
-
     }
-
 }
