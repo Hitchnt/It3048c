@@ -44,7 +44,7 @@ class WeatherService {
         return _weather
     }
 
-    fun fetchWeather(locationName: String) : MutableLiveData<ArrayList<Weather>> {
+    fun fetchWeatherByLocation(locationName: String) : MutableLiveData<ArrayList<Weather>> {
         var _weather = MutableLiveData<ArrayList<Weather>>()
         val service = RetrofitClientInstance.retrofitInstance?.create(IWeatherDAO::class.java)
         val call = service?.getAllWeather()

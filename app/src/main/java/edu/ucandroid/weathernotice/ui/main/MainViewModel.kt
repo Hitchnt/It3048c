@@ -17,10 +17,14 @@ class MainViewModel : ViewModel() {
 
     // TODO: Implement the ViewModel
     fun fetchWeatherLocations() {
+        weatherLocations = weatherService.fetchAllWeather()
+    }
+    // TODO: Implement the ViewModel
+    fun fetchAllWeather() {
         weatherLocations = weatherService.fetchAllWeather();
     }
 
     fun fetchWeatherLocations(locationName: String) {
-        weatherLocations = weatherService.fetchWeather(locationName);
+        weatherLocations = weatherService.fetchWeatherByLocation(locationName)
     }
 }
