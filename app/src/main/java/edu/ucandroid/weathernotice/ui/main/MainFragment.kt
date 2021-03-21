@@ -2,6 +2,7 @@ package edu.ucandroid.weathernotice.ui.main
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
@@ -21,7 +23,12 @@ import kotlinx.android.synthetic.main.main_fragment.*
 import java.util.*
 import kotlin.collections.ArrayList
 import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import edu.ucandroid.weathernotice.dto.Reminder
+import edu.ucandroid.weathernotice.dto.Weather
+import kotlin.collections.HashMap
 
 
 class MainFragment : Fragment() {
@@ -59,8 +66,8 @@ class MainFragment : Fragment() {
     }
     private fun logon() {
         var providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build(),
-            AuthUI.IdpConfig.GoogleBuilder().build()
+            AuthUI.IdpConfig.EmailBuilder().build()
+            //,AuthUI.IdpConfig.GoogleBuilder().build()
         )
         startActivityForResult(
             AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(), AUTH_REQUEST_CODE
@@ -68,13 +75,40 @@ class MainFragment : Fragment() {
     }
 
     private fun saveString() {
+     /**
+
        if(user == null) {
        logon()
     }
       //  var reminder = Reminder().apply{
+    var reminder = Reminder().apply {
+        city = "citytest"
+        massage="massagetest"
+    }
+        * */
+        saveFireStore("input from users","just even more input from the la  user")
+       // viewModel.save(reminder,user!!)
 
       //  }
        }
+
+
+    fun saveFireStore(city:String,reminder:String){
+        val db = FirebaseFirestore.getInstance()
+        val Account:MutableMap<String,Any> = HashMap()
+        Account["City"]= city
+        Account["Message"]= reminder
+
+        db.collection("Reminders")
+            .add(Account)
+            .addOnSuccessListener {
+                Toast.makeText(activity,"record added",Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+            Toast.makeText(activity,"record added",Toast.LENGTH_SHORT).show()
+            }
+    }
+
 
 
 
@@ -183,4 +217,11 @@ class MainFragment : Fragment() {
 
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == AUTH_REQUEST_CODE){
+          user = FirebaseAuth.getInstance().currentUser
+        }
+    }
 }
