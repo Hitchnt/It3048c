@@ -1,5 +1,4 @@
 package edu.ucandroid.weathernotice.ui.main
-
 import android.Manifest
 import android.content.Context
 import android.content.Intent
@@ -171,8 +170,11 @@ class MainFragment : Fragment() {
                 location.longitude,
                 1
         ) as ArrayList<Address>
-        enterCityname.setText(addressList.get(0).getAddressLine(0))
-        //enterCityname.text= addressList.get(0).getAddressLine(0)
+        /** this get the full address **/
+        //enterCityname.setText(addressList.get(0).getAddressLine(0))
+        /** this get the city only from address **/
+        enterCityname.setText(addressList[0].locality)
+
 
 
     }
