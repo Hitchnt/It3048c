@@ -58,8 +58,13 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
         btnLocation.setOnClickListener {
-            saveString()
+
             getLocation()
+
+        }
+        btnSave.setOnClickListener {
+            saveString()
+
 
         }
     }
