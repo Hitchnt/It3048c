@@ -56,7 +56,7 @@ class MainFragment : Fragment() {
             cal.set(Calendar.MINUTE, minute)
             tTime.text = SimpleDateFormat("HH:mm").format(cal.time)
         }
-        TimePickerDialog(context, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
+        TimePickerDialog(context, R.style.TimePickerTheme, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
     }
 
 
