@@ -16,8 +16,10 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import edu.ucandroid.weathernotice.R
 import kotlinx.android.synthetic.main.main_fragment.*
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class MainFragment : Fragment() {
 
@@ -42,7 +44,21 @@ class MainFragment : Fragment() {
         btnLocation.setOnClickListener {
             getLocation()
         }
+        btnEdit.setOnClickListener {
+            timepickerDialog()
+        }
     }
+
+    fun timepickerDialog(){
+        val cal = Calendar.getInstance()
+        val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+            cal.set(Calendar.HOUR_OF_DAY, hour)
+            cal.set(Calendar.MINUTE, minute)
+            tTime.text = SimpleDateFormat("HH:mm").format(cal.time)
+        }
+        TimePickerDialog(context, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
+    }
+
 
     fun getLocation() {
 
