@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import edu.ucandroid.weathernotice.R
 import kotlinx.android.synthetic.main.main_fragment.*
+import edu.ucandroid.weathernotice.dto.*
 
 class MainFragment : Fragment() {
 
@@ -33,10 +34,15 @@ class MainFragment : Fragment() {
         viewModel.locationinfos.observe(this, Observer{
                 locationinfos -> enterCityname.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, locationinfos))
         })
+
         viewModel.fetchLocations()
 
-        viewModel.fetchWeather()
-    }
+        btnSearch.setOnClickListener {
+           // viewModel.weatherService.fetchWeather()
+            showCity.text = viewModel.weatherinfos.toString()
 
+        }
+
+    }
 
 }

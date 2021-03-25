@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import edu.ucandroid.weathernotice.dao.IWeatherDAO
 import edu.ucandroid.weathernotice.dto.LocationInfo
 import edu.ucandroid.weathernotice.dto.Weather
+import edu.ucandroid.weathernotice.dto.WeatherInfo
 import edu.ucandroid.weathernotice.ui.main.RetrofitClientInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -13,16 +14,16 @@ import retrofit2.Response
 
 class WeatherService {
 
-    fun fetchWeather() : MutableLiveData<ArrayList<Weather>> {
-        var _weather = MutableLiveData<ArrayList<Weather>>()
+    fun fetchWeather() : MutableLiveData<ArrayList<WeatherInfo>> {
+        var _weather = MutableLiveData<ArrayList<WeatherInfo>>()
         val service = RetrofitClientInstance.retrofitInstance?.create(IWeatherDAO::class.java)
-        val call = service?.getWeather(city, countryCode)
-        call?.enqueue(object : Callback<ArrayList<Weather>> {
+        val call = service?.getAllWeather()
+        call?.enqueue(object : Callback<ArrayList<WeatherInfo>> {
             /**
              * Invoked when a network exception occurred talking to the server or when an unexpected
              * exception occurred creating the request or processing the response.
              */
-            override fun onFailure(call: Call<ArrayList<Weather>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<WeatherInfo>>, t: Throwable) {
                 val failMessage="Something went wrong"
                 Log.e("Weather Array List Call", failMessage, t)
             }
@@ -35,8 +36,8 @@ class WeatherService {
              * Call [Response.isSuccessful] to determine if the response indicates success.
              */
             override fun onResponse(
-                    call: Call<ArrayList<Weather>>,
-                    response: Response<ArrayList<Weather>>
+                    call: Call<ArrayList<WeatherInfo>>,
+                    response: Response<ArrayList<WeatherInfo>>
             ) {
                 _weather.value = response.body()
             }

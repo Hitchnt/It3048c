@@ -13,8 +13,9 @@ data class Weather(
         @SerializedName("sunrise") var sunrise: String,
         @SerializedName("sunset") var sunset: String,
         @SerializedName("pres") var pressure: String,
-        @SerializedName("wind_spd") var windSpeed: String
-        //do we need temp, precipitation, description?
+        @SerializedName("wind_spd") var windSpeed: String,
+        @SerializedName("temp") var tempCelsius: String
+        //do we need precipitation, description?
         ) {
 
     override fun toString(): String {

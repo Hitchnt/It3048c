@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.ucandroid.weathernotice.dto.LocationInfo
 import edu.ucandroid.weathernotice.dto.Weather
+import edu.ucandroid.weathernotice.dto.WeatherInfo
 import edu.ucandroid.weathernotice.service.LocationService
 import edu.ucandroid.weathernotice.service.WeatherService
 
@@ -12,8 +13,10 @@ class MainViewModel : ViewModel() {
 
 
 
-    var locationinfos: MutableLiveData<ArrayList<LocationInfo>> = MutableLiveData<ArrayList<LocationInfo>>()
+    var locationinfos: MutableLiveData<ArrayList<LocationInfo>> = MutableLiveData()
     var locationService: LocationService = LocationService()
+    var weatherinfos: MutableLiveData<ArrayList<WeatherInfo>> = MutableLiveData()
+    var weatherService: WeatherService = WeatherService()
     init{
         fetchLocations()
     }
@@ -22,7 +25,9 @@ class MainViewModel : ViewModel() {
 
 
     fun fetchLocations() {
-        locationinfos = locationService.fetchLocation();
+        locationinfos = locationService.fetchLocation()
+
+
     }
 
 }
