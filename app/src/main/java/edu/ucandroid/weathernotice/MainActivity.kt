@@ -9,20 +9,29 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GestureDetectorCompat
+import androidx.lifecycle.ViewModelProvider
+import edu.ucandroid.weathernotice.fragments.Fragment
 import edu.ucandroid.weathernotice.fragments.ListFragment
 import edu.ucandroid.weathernotice.ui.main.MainFragment
+import edu.ucandroid.weathernotice.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.main_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var detector: GestureDetectorCompat
+    private lateinit var listFragment: ListFragment
+    private lateinit var mainFragment: MainFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+        listFragment = ListFragment.newInstance()
+        mainFragment = MainFragment.newInstance()
+        val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
+                    .replace(R.id.container, mainFragment)
                     .commitNow()
         }
         detector = GestureDetectorCompat(this,WeatherGestureListener())
@@ -85,12 +94,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onSwipeLeft() {
-        Toast.makeText(this, "Left Swip", Toast.LENGTH_LONG).show()
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.container, listFragment)
+                .commitNow()
     }
 
     private fun onSwipeRight(){
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, ListFragment.newInstance())
+            .replace(R.id.container, mainFragment)
             .commitNow()
     }
 }

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import edu.ucandroid.weathernotice.R
 import edu.ucandroid.weathernotice.dto.List
+import edu.ucandroid.weathernotice.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.list_fragment.*
 import kotlinx.android.synthetic.main.main_fragment.*
 
@@ -18,7 +19,7 @@ class ListFragment : Fragment() {
         fun newInstance() = ListFragment()
     }
 
-    private lateinit var viewModel: ListViewModel
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -27,7 +28,9 @@ class ListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ListViewModel::class.java)
+        activity.let {
+            viewModel = ViewModelProvider(it!!).get(MainViewModel::class.java)
+        }
         btnAdd.setOnClickListener {
 
         }

@@ -39,7 +39,10 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        activity.let {
+            viewModel = ViewModelProvider(it!!).get(MainViewModel::class.java)
+        }
+
         // TODO: Use the ViewModel
         btnLocation.setOnClickListener {
             getLocation()
