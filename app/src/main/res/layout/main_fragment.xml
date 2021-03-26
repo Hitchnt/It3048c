@@ -11,7 +11,7 @@
         android:scrollbarSize="8dp"
         tools:context=".MainActivity">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/enterCityname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
