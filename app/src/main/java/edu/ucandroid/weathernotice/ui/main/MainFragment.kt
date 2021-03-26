@@ -14,9 +14,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.observe
 import com.google.android.gms.location.*
 import edu.ucandroid.weathernotice.R
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -35,6 +39,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.main_fragment2.view.split
 
 class MainFragment : Fragment() {
 
@@ -52,38 +57,14 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-
-        val queue = Volley.newRequestQueue(getActivity());
+        //Not yet implemented
+       /* val queue = Volley.newRequestQueue(getActivity());
         val url = "https://api.weatherbit.io/v2.0/current?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA";
         val urltmrw = "https://api.weatherbit.io/v2.0/forecast/hourly?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA&hours=24";
         val urlomrw = "https://api.weatherbit.io/v2.0/forecast/hourly?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA";
-
         val sdf_to = SimpleDateFormat("EEEE");
-        val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");*/
 
-        val request = JsonObjectRequest(Request.Method.GET, url, null,
-                Response.Listener { response ->
-                    var typeText : String;
-                    val data = response.getJSONArray("data").getJSONObject(0);
-                    if(data.getDouble("precip") != 0.0) { typeText = "Rainy"; }
-                    else if(data.getInt("clouds") > 50) { typeText = "Cloudy"; }
-                    else { typeText = "Clear"; }
-
-                    //backgroundImage.setImageResource(if (typeText == "Rainy") R.drawable.ic_rainy_bg else (if (typeText == "Cloudy") R.drawable.ic_clear_bg else R.drawable.ic_sunny_bg));
-
-                    sunset.text = data.getString("sunset").toString();
-                    sunrise.text = data.getString("sunrise").toString();
-                    showTemperature.text = data.getString("temp").toString() + "º";
-
-                },
-                Response.ErrorListener { error ->
-                    Log.d("ERROR", error.toString());
-                });
-
-        // there surely is a better way to do is but it's 3am and i cba
-
-
-        queue.add(request);
 
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
@@ -91,7 +72,15 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         // TODO: Use the ViewModel
+        viewModel.locationinfos.observe(this, androidx.lifecycle.Observer {
+            locationinfos -> enterCityname.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, locationinfos))
+
+        })
+
+        viewModel.fetchLocations()
+
         btnLocation.setOnClickListener {
 
             getLocation()
@@ -101,33 +90,45 @@ class MainFragment : Fragment() {
             saveString()
         }
         btnSearch.setOnClickListener {
-            GetWeatherForLoocation()
+            if (enterCityname.text != null)
+            GetWeatherForLoocation(enterCityname.text.toString())
         }
 
     }
 
 
-    private fun GetWeatherForLoocation() {
-        val url = "https://api.weatherbit.io/v2.0/current?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA";
-        val sdf_to = SimpleDateFormat("EEEE");
-        val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    private fun GetWeatherForLoocation(cityCountryName: String) {
+        val queue = Volley.newRequestQueue(getActivity());
+        val cityCountrySplit = cityCountryName.split(", ")
+        val cityName = cityCountrySplit[0]
+        val countryCode = cityCountrySplit[1]
+        val url = "https://api.weatherbit.io/v2.0/current?key=66af4499735e4bcc914957a0354de0b2&city=$cityName&country=$countryCode";
+        val sdf_to = SimpleDateFormat("EEEE")
+        val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
                 Response.Listener { response ->
-                    var typeText : String;
-                    val data = response.getJSONArray("data").getJSONObject(0)
-                    if(data.getDouble("precip") != 0.0) { typeText = "Rainy"; }
-                    else if(data.getInt("clouds") > 50) { typeText = "Cloudy"; }
-                    else { typeText = "Clear"; }
+                    var typeText : String
+                    val data = response.getJSONArray("data").getJSONObject(0);
+                    if(data.getDouble("precip") != 0.0) { typeText = "Rainy" }
+                    else if(data.getInt("clouds") > 50) { typeText = "Cloudy" }
+                    else { typeText = "Clear" }
+                    humidity.text = data.getString("rh").toString() + "%"
+                    sunset.text = data.getString("sunset").toString()
+                    sunrise.text = data.getString("sunrise").toString()
+                    showTemperature.text = data.getString("temp").toString() + "º Celsius"
+                    showCountry.text = data.getString("country_code").toString()
+                    showCity.text = data.getString("city_name").toString()
+                    pressure.text = data.getString("pres").toString() + " millibars"
+                    windSpeed.text = data.getString("wind_spd").toString() + " m/s"
 
-                    //backgroundImage.setImageResource(if (typeText == "Rainy") R.drawable.ic_rainy_bg else (if (typeText == "Cloudy") R.drawable.ic_clear_bg else R.drawable.ic_sunny_bg));
 
-                    //showTemperature.text = typeText;
-                    showTemperature.text = data.getString("temp").toString() + "º"
                 },
                 Response.ErrorListener { error ->
                     Log.d("ERROR", error.toString())
                 })
+        queue.add(request);
+
     }
 
 
