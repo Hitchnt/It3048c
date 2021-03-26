@@ -37,9 +37,13 @@ class MainFragment : Fragment() {
 
         viewModel.fetchLocations()
 
+
         btnSearch.setOnClickListener {
            // viewModel.weatherService.fetchWeather()
-            showCity.text = viewModel.weatherinfos.toString()
+           showTemperature.text = viewModel.weatherinfos.toString()
+           /* viewModel.weatherinfos.observe(this, Observer{
+                weatherinfos -> showTemperature.text = weatherinfos.toString()
+            })*/
 
         }
 

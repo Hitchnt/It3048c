@@ -27,7 +27,7 @@ class MainViewModel : ViewModel() {
     fun fetchLocations() {
         locationinfos = locationService.fetchLocation()
 
-
+        weatherinfos = weatherService.fetchWeather()
     }
 
 }

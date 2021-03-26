@@ -10,6 +10,7 @@ interface IWeatherDAO {
     @GET("/v2.0/current?&city=Cincinnati&country=USA&key=66af4499735e4bcc914957a0354de0b2")
     fun getAllWeather(): Call<ArrayList<WeatherInfo>>
 
-      @GET("/v2.0/current")
+    //Not yet implemented
+    @GET("/v2.0/current")
     fun getWeather(@Query("city") WeatherCity: String, @Query("country") WeatherCountry: String, @Query("key") WeatherKey: String = "66af4499735e4bcc914957a0354de0b2") : Call<ArrayList<Weather>>
 }
