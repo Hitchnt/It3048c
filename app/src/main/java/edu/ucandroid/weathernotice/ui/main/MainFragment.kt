@@ -241,9 +241,9 @@ class MainFragment : Fragment() {
                 1
         ) as ArrayList<Address>
         /** this get the full address **/
-        //enterCityname.setText(addressList.get(0).getAddressLine(0))
+        enterCityname.setText(addressList.get(0).getAddressLine(0))
         /** this get the city only from address **/
-        enterCityname.setText(addressList[0].locality)
+        enterCityname.setText(addressList[0].locality + " , " + addressList[0].countryCode )
 
 
 
