@@ -50,7 +50,15 @@ class MainFragment : Fragment() {
         btnEdit.setOnClickListener {
             timepickerDialog()
         }
+        btnList.setOnClickListener {
+
+
+
+        }
     }
+
+
+
 
     fun timepickerDialog(){
         val cal = Calendar.getInstance()

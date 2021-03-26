@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
 
     inner class WeatherGestureListener : GestureDetector.SimpleOnGestureListener(){
 
-        private val SWIP_THRESHOLD = 100
-        private val SWIP_VELOCITY_THRESHOLD =100
+        private val SWIP_THRESHOLD = 200
+        private val SWIP_VELOCITY_THRESHOLD = 200
         override fun onFling(
             downEvent: MotionEvent?,
             moveEvent: MotionEvent?,
