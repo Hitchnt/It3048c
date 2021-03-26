@@ -33,11 +33,15 @@ class MainViewModel : ViewModel() {
     }
 
     fun fetchWeatherLocations() {
-        weatherLocations = weatherService.fetchAllWeather();
+        weatherLocations = weatherService.fetchAllWeather()
+    }
+    // TODO: Implement the ViewModel
+    fun fetchAllWeather() {
+        weatherLocations = weatherService.fetchAllWeather()
     }
 
     fun fetchWeatherLocations(locationName: String) {
-        weatherLocations = weatherService.fetchWeather(locationName);
+        weatherLocations = weatherService.fetchWeatherByLocation(locationName)
     }
     fun save(reminder: Reminder, user: FirebaseUser){
         val document = firestore.collection("weather").document()
