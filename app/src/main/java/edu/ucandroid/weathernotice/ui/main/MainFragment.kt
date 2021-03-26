@@ -9,6 +9,7 @@ import android.location.Location
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,8 +28,13 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.ucandroid.weathernotice.dto.Reminder
 import edu.ucandroid.weathernotice.dto.Weather
+import java.text.SimpleDateFormat
 import kotlin.collections.HashMap
 
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 
 class MainFragment : Fragment() {
 
@@ -47,10 +53,39 @@ class MainFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
+        val queue = Volley.newRequestQueue(getActivity());
+        val url = "https://api.weatherbit.io/v2.0/current?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA";
+        val urltmrw = "https://api.weatherbit.io/v2.0/forecast/hourly?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA&hours=24";
+        val urlomrw = "https://api.weatherbit.io/v2.0/forecast/hourly?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA";
+
+        val sdf_to = SimpleDateFormat("EEEE");
+        val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+        val request = JsonObjectRequest(Request.Method.GET, url, null,
+                Response.Listener { response ->
+                    var typeText : String;
+                    val data = response.getJSONArray("data").getJSONObject(0);
+                    if(data.getDouble("precip") != 0.0) { typeText = "Rainy"; }
+                    else if(data.getInt("clouds") > 50) { typeText = "Cloudy"; }
+                    else { typeText = "Clear"; }
+
+                    //backgroundImage.setImageResource(if (typeText == "Rainy") R.drawable.ic_rainy_bg else (if (typeText == "Cloudy") R.drawable.ic_clear_bg else R.drawable.ic_sunny_bg));
+
+                    sunset.text = data.getString("sunset").toString();
+                    sunrise.text = data.getString("sunrise").toString();
+                    showTemperature.text = data.getString("temp").toString() + "º";
+
+                },
+                Response.ErrorListener { error ->
+                    Log.d("ERROR", error.toString());
+                });
+
+        // there surely is a better way to do is but it's 3am and i cba
+
+
+        queue.add(request);
 
         return inflater.inflate(R.layout.main_fragment, container, false)
-
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -64,10 +99,39 @@ class MainFragment : Fragment() {
         }
         btnSave.setOnClickListener {
             saveString()
-
-
         }
+        btnSearch.setOnClickListener {
+            GetWeatherForLoocation()
+        }
+
     }
+
+
+    private fun GetWeatherForLoocation() {
+        val url = "https://api.weatherbit.io/v2.0/current?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA";
+        val sdf_to = SimpleDateFormat("EEEE");
+        val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+        val request = JsonObjectRequest(Request.Method.GET, url, null,
+                Response.Listener { response ->
+                    var typeText : String;
+                    val data = response.getJSONArray("data").getJSONObject(0)
+                    if(data.getDouble("precip") != 0.0) { typeText = "Rainy"; }
+                    else if(data.getInt("clouds") > 50) { typeText = "Cloudy"; }
+                    else { typeText = "Clear"; }
+
+                    //backgroundImage.setImageResource(if (typeText == "Rainy") R.drawable.ic_rainy_bg else (if (typeText == "Cloudy") R.drawable.ic_clear_bg else R.drawable.ic_sunny_bg));
+
+                    //showTemperature.text = typeText;
+                    showTemperature.text = data.getString("temp").toString() + "º"
+                },
+                Response.ErrorListener { error ->
+                    Log.d("ERROR", error.toString())
+                })
+    }
+
+
+
     private fun logon() {
         var providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build()
@@ -232,3 +296,5 @@ class MainFragment : Fragment() {
         }
     }
 }
+
+
