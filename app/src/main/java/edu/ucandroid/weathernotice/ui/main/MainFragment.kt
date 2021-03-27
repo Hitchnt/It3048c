@@ -43,21 +43,17 @@ class MainFragment : Fragment() {
             viewModel = ViewModelProvider(it!!).get(MainViewModel::class.java)
         }
 
-        // TODO: Use the ViewModel
         btnLocation.setOnClickListener {
             getLocation()
         }
         btnEdit.setOnClickListener {
+            //to set a reminder
             timepickerDialog()
         }
         btnList.setOnClickListener {
 
-
-
         }
     }
-
-
 
 
     fun timepickerDialog(){

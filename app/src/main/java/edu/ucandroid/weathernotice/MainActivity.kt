@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
 
     inner class WeatherGestureListener : GestureDetector.SimpleOnGestureListener(){
 
-        private val SWIP_THRESHOLD = 200
-        private val SWIP_VELOCITY_THRESHOLD = 200
+        private val SWIP_THRESHOLD = 250
+        private val SWIP_VELOCITY_THRESHOLD = 250
         override fun onFling(
             downEvent: MotionEvent?,
             moveEvent: MotionEvent?,
@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
             var diffY = moveEvent?.y?.minus(downEvent!!.y) ?: 0.0F
 
             return if (Math.abs(diffX) > Math.abs(diffY)){
+                //when swipe parallel
                 if(Math.abs(diffX) > SWIP_THRESHOLD && Math.abs(velocityX) > SWIP_VELOCITY_THRESHOLD) {
                     if (diffX > 0) {
                         this@MainActivity.onSwipeRight()
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity() {
                     super.onFling(downEvent, moveEvent, velocityX, velocityY)
                 }
             }else{
+                //when swipe vertical
                 if(Math.abs(diffY) > SWIP_THRESHOLD && Math.abs(velocityX) > SWIP_VELOCITY_THRESHOLD) {
                     if (diffY > 0) {
                         this@MainActivity.onSwipeTop()
@@ -92,13 +94,13 @@ class MainActivity : AppCompatActivity() {
     private fun onSwipeTop() {
         Toast.makeText(this, "Top Swip", Toast.LENGTH_LONG).show()
     }
-
+//swipe left to show the list screen
     private fun onSwipeLeft() {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.container, listFragment)
                 .commitNow()
     }
-
+//swipe right to show the main screen
     private fun onSwipeRight(){
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, mainFragment)
