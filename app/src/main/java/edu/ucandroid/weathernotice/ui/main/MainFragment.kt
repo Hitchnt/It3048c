@@ -73,7 +73,7 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        // TODO: Use the ViewModel
+        //set observer of location info for autocomplete
         viewModel.locationinfos.observe(this, androidx.lifecycle.Observer {
             locationinfos -> enterCityname.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, locationinfos))
 
@@ -91,14 +91,15 @@ class MainFragment : Fragment() {
         }
         btnSearch.setOnClickListener {
             if (enterCityname.text != null)
-            GetWeatherForLoocation(enterCityname.text.toString())
+            GetWeatherForLocation(enterCityname.text.toString())
         }
 
     }
 
 
-    private fun GetWeatherForLoocation(cityCountryName: String) {
+    private fun GetWeatherForLocation(cityCountryName: String) {
         val queue = Volley.newRequestQueue(getActivity());
+        //split city name and country code for URL
         val cityCountrySplit = cityCountryName.split(", ")
         val cityName = cityCountrySplit[0]
         val countryCode = cityCountrySplit[1]
@@ -108,6 +109,7 @@ class MainFragment : Fragment() {
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
                 Response.Listener { response ->
+                    //set weather dat to UI fields
                     var typeText : String
                     val data = response.getJSONArray("data").getJSONObject(0);
                     if(data.getDouble("precip") != 0.0) { typeText = "Rainy" }

@@ -1,5 +1,6 @@
 package edu.ucandroid.weathernotice.service
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import edu.ucandroid.weathernotice.dao.IWeatherDAO
 import edu.ucandroid.weathernotice.dto.Weather
@@ -21,9 +22,8 @@ class WeatherService {
              * exception occurred creating the request or processing the response.
              */
             override fun onFailure(call: Call<ArrayList<Weather>>, t: Throwable) {
-                val j = 1 + 1
-                val i = 1 + 1
-                val failMessage="Something went wrong"
+                val failMessage="Something went wrong!"
+                Log.e("Weather ArrayList callback",failMessage, t)
             }
 
             /**
@@ -54,9 +54,8 @@ class WeatherService {
              * exception occurred creating the request or processing the response.
              */
             override fun onFailure(call: Call<ArrayList<Weather>>, t: Throwable) {
-                val j = 1 + 1
-                val i = 1 + 1
-                val failMessage="Something went wrong"
+                val failMessage="Something went wrong!"
+                Log.e("Weather ArrayList by name callback",failMessage, t)
             }
 
             /**

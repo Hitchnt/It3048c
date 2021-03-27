@@ -25,8 +25,6 @@ class MainViewModel : ViewModel() {
         firestore = FirebaseFirestore.getInstance()
     }
 
-    // TODO: Implement the ViewModel
-
 
     fun fetchLocations() {
         locationinfos = locationService.fetchLocation()
@@ -35,7 +33,7 @@ class MainViewModel : ViewModel() {
     fun fetchWeatherLocations() {
         weatherLocations = weatherService.fetchAllWeather()
     }
-    // TODO: Implement the ViewModel
+
     fun fetchAllWeather() {
         weatherLocations = weatherService.fetchAllWeather()
     }
