@@ -1,11 +1,20 @@
 package edu.ucandroid.weathernotice.ui.main
 
+
+import androidx.lifecycle.LiveData
+
 import android.util.Log
+
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
 import edu.ucandroid.weathernotice.dto.Weather
 import edu.ucandroid.weathernotice.service.WeatherService
+
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.ucandroid.weathernotice.dto.LocationInfo
 import edu.ucandroid.weathernotice.dto.Reminder
