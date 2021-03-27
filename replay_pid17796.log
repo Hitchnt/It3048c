@@ -1,0 +1,6 @@
+JvmtiExport can_access_local_variables 0
+JvmtiExport can_hotswap_or_post_breakpoint 0
+JvmtiExport can_post_on_exceptions 0
+# 107 ciObject found
+ciMethod com/android/tools/r8/s/b/B a (Lcom/android/tools/r8/s/b/X;Ljava/util/function/Function;)Lcom/android/tools/r8/s/a/h/d; 4097 1 11776 0 -1
+ciMethodData com/android/tools/r8/s/b/B a (Lcom/android/tools/r8/s/b/X;Ljava/util/function/Function;)Lcom/android/tools/r8/s/a/h/d; 0 0 orig 264 88 29 208 89 0 0 0 0 216 141 14 54 0 0 0 0 200 1 0 0 80 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 77 68 79 32 101 120 116 114 97 32 100 97 116 97 32 108 111 99 107 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 1 96 1 0 1 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 13 0 2 0 0 0 112 0 0 0 255 255 255 255 5 0 4 0 0 0 0 0 data 14 0x40005 0x1 0x262a30b0 0x2bfc 0x100975c70 0x2 0x70007 0x2bf9 0x30 0x6 0xa0002 0x6 0x130002 0x2bf9 oops 2 2 com/android/tools/r8/s/b/q1
