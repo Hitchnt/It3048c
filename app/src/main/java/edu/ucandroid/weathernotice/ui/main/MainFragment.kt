@@ -1,5 +1,6 @@
 package edu.ucandroid.weathernotice.ui.main
 import android.Manifest
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -39,7 +40,6 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.main_fragment2.view.split
 
 class MainFragment : Fragment() {
 
@@ -93,7 +93,21 @@ class MainFragment : Fragment() {
             if (enterCityname.text != null)
             GetWeatherForLocation(enterCityname.text.toString())
         }
+        btnEdit.setOnClickListener {
+            //to set a reminder
+            timepickerDialog()
+        }
 
+    }
+
+    private fun timepickerDialog() {
+        val cal = Calendar.getInstance()
+        val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+            cal.set(Calendar.HOUR_OF_DAY, hour)
+            cal.set(Calendar.MINUTE, minute)
+            tTime.text = SimpleDateFormat("HH:mm").format(cal.time)
+        }
+        TimePickerDialog(context, R.style.TimePickerTheme, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
     }
 
 
