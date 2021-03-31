@@ -13,7 +13,7 @@ import edu.ucandroid.weathernotice.service.LocationService
 
 class MainViewModel : ViewModel() {
 
-    private lateinit var firestore : FirebaseFirestore
+    private var firestore : FirebaseFirestore
     var locationinfos: MutableLiveData<ArrayList<LocationInfo>> = MutableLiveData()
     var locationService: LocationService = LocationService()
     var weatherLocations: MutableLiveData<ArrayList<Weather>> = MutableLiveData<ArrayList<Weather>>()
