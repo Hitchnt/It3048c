@@ -51,7 +51,7 @@ class MainFragment : Fragment() {
     }
 
     lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
-    val locationRequestId = 100
+    private val locationRequestId = 100
 
     private lateinit var viewModel: MainViewModel
 
@@ -100,6 +100,7 @@ class MainFragment : Fragment() {
 
     }
 
+    //comments
     private fun timepickerDialog() {
         val cal = Calendar.getInstance()
         val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
