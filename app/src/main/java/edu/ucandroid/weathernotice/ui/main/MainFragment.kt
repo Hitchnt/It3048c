@@ -51,7 +51,7 @@ class MainFragment : Fragment() {
     }
 
     lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
-    val locationRequestId = 100
+    val LOCATION_REQUEST_ID = 100
 
     private lateinit var viewModel: MainViewModel
 
@@ -283,7 +283,7 @@ class MainFragment : Fragment() {
     fun askLocationPermission() {
 
         requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                locationRequestId)
+                LOCATION_REQUEST_ID)
 
 
     }
@@ -295,7 +295,7 @@ class MainFragment : Fragment() {
             grantResults: IntArray
     ) {
 
-        if (requestCode == locationRequestId) {
+        if (requestCode == LOCATION_REQUEST_ID) {
 
             if (grantResults != null && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
