@@ -87,6 +87,7 @@ class MainFragment : Fragment() {
 
         }
         btnSave.setOnClickListener {
+            //logon()
             saveString()
         }
         btnSearch.setOnClickListener {
@@ -149,7 +150,9 @@ class MainFragment : Fragment() {
 
 
 
-    private fun logon() {
+     fun logon() {
+         if(user  == null) {
+
         var providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build()
             //,AuthUI.IdpConfig.GoogleBuilder().build()
@@ -157,44 +160,54 @@ class MainFragment : Fragment() {
         startActivityForResult(
             AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(), AUTH_REQUEST_CODE
         )
-    }
+         }
+     }
+
 
     private fun saveString() {
-     /**
 
        if(user == null) {
        logon()
-    }
-      //  var reminder = Reminder().apply{
-    var reminder = Reminder().apply {
-        city = "citytest"
-        massage="massagetest"
-    }
-        * */
-        saveFireStore("input from users","just even more input from the la  user")
-       // viewModel.save(reminder,user!!)
-
-      //  }
+       }
+        else{
+           saveFireStore( showCity.text.toString(),tTime.text.toString(),  FirebaseAuth.getInstance().currentUser.email )
        }
 
+    }
 
-    fun saveFireStore(city:String,reminder:String){
+
+     fun saveFireStore(city:String, reminder:String, user:String){
         val db = FirebaseFirestore.getInstance()
-        val Account:MutableMap<String,Any> = HashMap()
-        Account["City"]= city
-        Account["Message"]= reminder
-
+        val account:MutableMap<String,Any> = HashMap()
+        account["City"]= city
+        account["Message"]= reminder
+        account["UserID"]= user
         db.collection("Reminders")
-            .add(Account)
+            .add(account)
             .addOnSuccessListener {
                 Toast.makeText(activity,"record added",Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
             Toast.makeText(activity,"record added",Toast.LENGTH_SHORT).show()
             }
+       // readFireStoreData()
     }
 
+    fun readFireStoreData(){
+        val db = FirebaseFirestore.getInstance()
+        db.collection("Reminders")
+            .get()
+            .addOnCompleteListener{
+                val result: StringBuffer = StringBuffer()
 
+                if(it.isSuccessful){
+                    for(document in it.result!!){
+                        result.append(document.data.getValue("City")).append(" ")
+                        Toast.makeText(activity,result,Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+    }
 
 
     fun getLocation() {
