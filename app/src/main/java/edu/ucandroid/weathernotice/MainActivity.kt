@@ -1,6 +1,10 @@
 package edu.ucandroid.weathernotice
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.TimePickerDialog
+import android.content.Context
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -9,6 +13,8 @@ import android.view.MotionEvent
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
 import edu.ucandroid.weathernotice.fragments.Fragment
@@ -21,6 +27,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.internal.notify
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,6 +35,8 @@ class MainActivity : AppCompatActivity() {
     private  lateinit var detector: GestureDetectorCompat
     private lateinit var listFragment: ListFragment
     private lateinit var mainFragment: MainFragment
+    private  var CHANNEL_ID= "channelis_example_01"
+    private  var notificationId = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,17 +58,44 @@ class MainActivity : AppCompatActivity() {
     private fun loop() {
         CoroutineScope(IO).
         launch {
-            delay(5000)
+            delay(10000)
             CoroutineScope(Main).launch {
-                ManagerToWorker()
+                activefunction()
                 loop()
             }
         }
     }
 
-    private fun ManagerToWorker() {
+    private fun activefunction() {
         //Toast.makeText( this,"test", Toast.LENGTH_SHORT).show()
+        //createNotificationchannel()
+        sendNotification()
+    }
 
+    private fun createNotificationchannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ){
+            val name = "noticication title"
+            val descriptionText = "description Text"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID,name,importance).apply {
+                description=descriptionText
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+
+    fun sendNotification(){
+        val builder = NotificationCompat.Builder(this,CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("possible  rain")
+                .setContentText("wear a rain coat")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(this)){
+            notify(notificationId,builder.build())
+        }
     }
 
 
