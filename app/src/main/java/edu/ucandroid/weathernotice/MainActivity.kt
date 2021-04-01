@@ -3,6 +3,7 @@ package edu.ucandroid.weathernotice
 import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.Button
@@ -15,6 +16,11 @@ import edu.ucandroid.weathernotice.fragments.ListFragment
 import edu.ucandroid.weathernotice.ui.main.MainFragment
 import edu.ucandroid.weathernotice.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,7 +41,27 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
         }
         detector = GestureDetectorCompat(this,WeatherGestureListener())
+
+        loop()
+
     }
+
+    private fun loop() {
+        CoroutineScope(IO).
+        launch {
+            delay(5000)
+            CoroutineScope(Main).launch {
+                ManagerToWorker()
+                loop()
+            }
+        }
+    }
+
+    private fun ManagerToWorker() {
+        //Toast.makeText( this,"test", Toast.LENGTH_SHORT).show()
+
+    }
+
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return if (detector.onTouchEvent((event))){
@@ -106,4 +132,9 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.container, mainFragment)
             .commitNow()
     }
+
+
+
+
+
 }

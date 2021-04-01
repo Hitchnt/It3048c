@@ -1,45 +1,39 @@
 package edu.ucandroid.weathernotice.ui.main
+
 import android.Manifest
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.EditText
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.observe
-import com.google.android.gms.location.*
-import edu.ucandroid.weathernotice.R
-import kotlinx.android.synthetic.main.main_fragment.*
-import java.util.*
-import kotlin.collections.ArrayList
-import com.firebase.ui.auth.AuthUI
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
-import edu.ucandroid.weathernotice.dto.Reminder
-import edu.ucandroid.weathernotice.dto.Weather
-import java.text.SimpleDateFormat
-import kotlin.collections.HashMap
-
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.firebase.ui.auth.AuthUI
+import com.google.android.gms.location.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import edu.ucandroid.weathernotice.R
+import kotlinx.android.synthetic.main.main_fragment.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+
 
 class MainFragment : Fragment() {
 
@@ -66,6 +60,8 @@ class MainFragment : Fragment() {
         val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");*/
 
 
+
+
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
@@ -74,8 +70,8 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         //set observer of location info for autocomplete
-        viewModel.locationinfos.observe(this, androidx.lifecycle.Observer {
-            locationinfos -> enterCityname.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, locationinfos))
+        viewModel.locationinfos.observe(this, androidx.lifecycle.Observer { locationinfos ->
+            enterCityname.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, locationinfos))
 
         })
 
@@ -87,7 +83,7 @@ class MainFragment : Fragment() {
 
         }
         btnSave.setOnClickListener {
-            //logon()
+            logon()
             saveString()
         }
         btnSearch.setOnClickListener {
@@ -125,11 +121,15 @@ class MainFragment : Fragment() {
         val request = JsonObjectRequest(Request.Method.GET, url, null,
                 Response.Listener { response ->
                     //set weather dat to UI fields
-                    var typeText : String
+                    var typeText: String
                     val data = response.getJSONArray("data").getJSONObject(0);
-                    if(data.getDouble("precip") != 0.0) { typeText = "Rainy" }
-                    else if(data.getInt("clouds") > 50) { typeText = "Cloudy" }
-                    else { typeText = "Clear" }
+                    if (data.getDouble("precip") != 0.0) {
+                        typeText = "Rainy"
+                    } else if (data.getInt("clouds") > 50) {
+                        typeText = "Cloudy"
+                    } else {
+                        typeText = "Clear"
+                    }
                     humidity.text = data.getString("rh").toString() + "%"
                     sunset.text = data.getString("sunset").toString()
                     sunrise.text = data.getString("sunrise").toString()
@@ -154,13 +154,14 @@ class MainFragment : Fragment() {
          if(user  == null) {
 
         var providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build()
-            //,AuthUI.IdpConfig.GoogleBuilder().build()
+                AuthUI.IdpConfig.EmailBuilder().build()
+                //,AuthUI.IdpConfig.GoogleBuilder().build()
         )
         startActivityForResult(
-            AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(), AUTH_REQUEST_CODE
+                AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(), AUTH_REQUEST_CODE
         )
          }
+
      }
 
 
@@ -170,25 +171,25 @@ class MainFragment : Fragment() {
        logon()
        }
         else{
-           saveFireStore( showCity.text.toString(),tTime.text.toString(),  FirebaseAuth.getInstance().currentUser.email )
+           saveFireStore(showCity.text.toString(), tTime.text.toString(), FirebaseAuth.getInstance().currentUser.email)
        }
 
     }
 
 
-     fun saveFireStore(city:String, reminder:String, user:String){
+     fun saveFireStore(city: String, reminder: String, user: String){
         val db = FirebaseFirestore.getInstance()
-        val account:MutableMap<String,Any> = HashMap()
+        val account:MutableMap<String, Any> = HashMap()
         account["City"]= city
         account["Message"]= reminder
         account["UserID"]= user
         db.collection("Reminders")
             .add(account)
             .addOnSuccessListener {
-                Toast.makeText(activity,"record added",Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "record added", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-            Toast.makeText(activity,"record added",Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "record added", Toast.LENGTH_SHORT).show()
             }
        // readFireStoreData()
     }
@@ -203,7 +204,7 @@ class MainFragment : Fragment() {
                 if(it.isSuccessful){
                     for(document in it.result!!){
                         result.append(document.data.getValue("City")).append(" ")
-                        Toast.makeText(activity,result,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, result, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -225,16 +226,16 @@ class MainFragment : Fragment() {
         locationRequest.interval = 60000
         locationRequest.fastestInterval = 5000
 
-        mFusedLocationProviderClient = FusedLocationProviderClient( context!!)
+        mFusedLocationProviderClient = FusedLocationProviderClient(context!!)
 
 
         if (ContextCompat.checkSelfPermission(
                         context!!,
                         Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
                         context!!,
                         Manifest.permission.ACCESS_COARSE_LOCATION
-             ) != PackageManager.PERMISSION_GRANTED)
+                ) != PackageManager.PERMISSION_GRANTED)
 
         {
 
@@ -272,7 +273,7 @@ class MainFragment : Fragment() {
         /** this get the full address **/
         //enterCityname.setText(addressList.get(0).getAddressLine(0))
         /** this get the city only from address **/
-        enterCityname.setText(addressList[0].locality + " , " + addressList[0].countryCode )
+        enterCityname.setText(addressList[0].locality + " , " + addressList[0].countryCode)
 
 
 
