@@ -8,6 +8,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.Button
@@ -17,6 +18,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import edu.ucandroid.weathernotice.fragments.Fragment
 import edu.ucandroid.weathernotice.fragments.ListFragment
 import edu.ucandroid.weathernotice.ui.main.MainFragment
@@ -87,9 +92,12 @@ class MainActivity : AppCompatActivity() {
 
 
     fun sendNotification(){
+        //make if test on weather status from API
+        val weatherDescription=intent.getStringExtra("weatherDescription")
         val builder = NotificationCompat.Builder(this,CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("possible  rain")
+                .setContentTitle(weatherDescription)
+        //showDateTime.text = data.getString("weather").toString().substringAfterLast(":'").substringBeforeLast("'}")
                 .setContentText("wear a rain coat")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 

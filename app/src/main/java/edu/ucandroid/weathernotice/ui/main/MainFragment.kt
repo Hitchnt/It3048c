@@ -27,6 +27,7 @@ import com.google.android.gms.location.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.ucandroid.weathernotice.MainActivity
 import edu.ucandroid.weathernotice.R
 import kotlinx.android.synthetic.main.main_fragment.*
 import java.text.SimpleDateFormat
@@ -39,7 +40,7 @@ class MainFragment : Fragment() {
 
     private var user : FirebaseUser? = null
     private val AUTH_REQUEST_CODE = 2002
-
+    var weatherDesc = "";
     companion object {
         fun newInstance() = MainFragment()
     }
@@ -108,13 +109,14 @@ class MainFragment : Fragment() {
     }
 
 
-    private fun GetWeatherForLocation(cityCountryName: String) {
+    fun GetWeatherForLocation(cityCountryName: String) {
         val queue = Volley.newRequestQueue(getActivity());
         //split city name and country code for URL
         val cityCountrySplit = cityCountryName.split(", ")
         val cityName = cityCountrySplit[0]
         val countryCode = cityCountrySplit[1]
         val url = "https://api.weatherbit.io/v2.0/current?key=66af4499735e4bcc914957a0354de0b2&city=$cityName&country=$countryCode";
+
         val sdf_to = SimpleDateFormat("EEEE")
         val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
@@ -138,13 +140,16 @@ class MainFragment : Fragment() {
                     showCity.text = data.getString("city_name").toString()
                     pressure.text = data.getString("pres").toString() + " millibars"
                     windSpeed.text = data.getString("wind_spd").toString() + " m/s"
-
+                    weatherDesc = data.getString("weather").toString().substringAfterLast(":'").substringBeforeLast("'}")
 
                 },
                 Response.ErrorListener { error ->
                     Log.d("ERROR", error.toString())
                 })
         queue.add(request);
+        var intent = Intent(context, MainActivity::class.java)
+        intent.putExtra("weatherDescription",weatherDesc)
+        startActivity(intent)
 
     }
 
