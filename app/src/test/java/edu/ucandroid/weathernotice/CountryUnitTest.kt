@@ -17,7 +17,7 @@ import java.net.URL
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+class CountryUnitTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
