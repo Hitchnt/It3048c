@@ -28,7 +28,6 @@ class CountryUnitTest {
 
     }
 
-
     @Test
     fun countryDTO_maintainsState() {
         var weather = Weather("US", "cincinnati")
@@ -39,7 +38,7 @@ class CountryUnitTest {
     fun weatherDTO_containsCincinnati() {
         givenViewModelIsInitialized()
         whenJSONDataAreReadAndParsed()
-        thenResultsShouldContainBelize()
+        thenResultsShouldContainCincinnati()
     }
     private fun givenViewModelIsInitialized() {
 
@@ -58,7 +57,7 @@ class CountryUnitTest {
         println("")
     }
 
-    private fun thenResultsShouldContainBelize() {
+    private fun thenResultsShouldContainCincinnati() {
         var containsCincinnati:Boolean = false
         mvm.weatherLocations.observeForever {
             it.forEach {
