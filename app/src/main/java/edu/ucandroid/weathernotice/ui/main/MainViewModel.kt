@@ -13,12 +13,17 @@ import edu.ucandroid.weathernotice.service.LocationService
 
 class MainViewModel : ViewModel() {
 
-    var firestore: FirestoreService = FirestoreService()
+    private var firestore : FirestoreService = FirestoreService()
     var locationinfos: MutableLiveData<ArrayList<LocationInfo>> = MutableLiveData()
     var locationService: LocationService = LocationService()
     var weatherLocations: MutableLiveData<ArrayList<Weather>> = MutableLiveData<ArrayList<Weather>>()
     var weatherService: WeatherService = WeatherService()
 
+    init{
+        fetchLocations()
+        fetchWeatherLocations("e")
+        //firestore = FirebaseFirestore.getInstance()
+    }
 
 
     fun fetchLocations() {
@@ -35,9 +40,6 @@ class MainViewModel : ViewModel() {
 
     fun fetchWeatherLocations(locationName: String) {
         weatherLocations = weatherService.fetchWeatherByLocation(locationName)
-    }
-    fun save(reminder: Reminder, user: FirebaseUser) {
-        firestore.save(reminder, user)
     }
 
 }
