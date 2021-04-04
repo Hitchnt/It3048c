@@ -58,7 +58,7 @@ class CountryUnitTest {
     }
 
     private fun thenResultsShouldContainCincinnati() {
-        var containsCincinnati:Boolean = false
+        var containsCincinnati = false
         mvm.weatherLocations.observeForever {
             it.forEach {
                 if (it.city.equals("Cincinnati")) {
