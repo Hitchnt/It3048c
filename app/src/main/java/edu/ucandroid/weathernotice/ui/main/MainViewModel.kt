@@ -42,4 +42,8 @@ class MainViewModel : ViewModel() {
         weatherLocations = weatherService.fetchWeatherByLocation(locationName)
     }
 
+    fun save(reminder: Reminder, user: FirebaseUser) {
+        firestore.save(reminder, user)
+    }
+
 }
