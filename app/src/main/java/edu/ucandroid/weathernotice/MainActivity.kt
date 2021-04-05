@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
         detector = GestureDetectorCompat(this,WeatherGestureListener())
 
-        loop()
+        //loop()
 
     }
 

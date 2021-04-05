@@ -121,7 +121,7 @@ class MainFragment : Fragment() {
         val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
-                Response.Listener { response ->
+                { response ->
                     //set weather dat to UI fields
                     var typeText: String
                     val data = response.getJSONArray("data").getJSONObject(0);
@@ -132,6 +132,8 @@ class MainFragment : Fragment() {
                     } else {
                         typeText = "Clear"
                     }
+                    imgWeather.setImageResource(if (typeText == "Rainy") R.drawable.rain else (if (typeText == "Cloudy") R.drawable.cloud else R.drawable.sun));
+
                     humidity.text = data.getString("rh").toString() + "%"
                     sunset.text = data.getString("sunset").toString()
                     sunrise.text = data.getString("sunrise").toString()
@@ -143,7 +145,7 @@ class MainFragment : Fragment() {
                     weatherDesc = data.getString("weather").toString().substringAfterLast(":'").substringBeforeLast("'}")
 
                 },
-                Response.ErrorListener { error ->
+                { error ->
                     Log.d("ERROR", error.toString())
                 })
         queue.add(request);
