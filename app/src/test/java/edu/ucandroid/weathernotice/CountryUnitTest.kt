@@ -17,7 +17,7 @@ import java.net.URL
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+class CountryUnitTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
@@ -29,12 +29,6 @@ class ExampleUnitTest {
     }
 
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
-
-
-    @Test
     fun countryDTO_maintainsState() {
         var weather = Weather("US", "cincinnati")
         assertTrue(weather.countryCode.equals("US"))
@@ -44,7 +38,7 @@ class ExampleUnitTest {
     fun weatherDTO_containsCincinnati() {
         givenViewModelIsInitialized()
         whenJSONDataAreReadAndParsed()
-        thenResultsShouldContainBelize()
+        thenResultsShouldContainCincinnati()
     }
     private fun givenViewModelIsInitialized() {
 
@@ -63,8 +57,8 @@ class ExampleUnitTest {
         println("")
     }
 
-    private fun thenResultsShouldContainBelize() {
-        var containsCincinnati:Boolean = false
+    private fun thenResultsShouldContainCincinnati() {
+        var containsCincinnati = false
         mvm.weatherLocations.observeForever {
             it.forEach {
                 if (it.city.equals("Cincinnati")) {
