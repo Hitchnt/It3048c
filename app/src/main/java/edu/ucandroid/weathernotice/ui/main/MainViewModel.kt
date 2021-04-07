@@ -34,9 +34,7 @@ class MainViewModel : ViewModel() {
         weatherLocations = weatherService.fetchAllWeather()
     }
 
-    fun fetchAllWeather() {
-        weatherLocations = weatherService.fetchAllWeather()
-    }
+
 
     fun fetchWeatherLocations(locationName: String) {
         weatherLocations = weatherService.fetchWeatherByLocation(locationName)

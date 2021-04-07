@@ -1,7 +1,6 @@
 package edu.ucandroid.weathernotice.ui.main
 import android.Manifest
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -16,12 +15,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.EditText
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.observe
 import com.google.android.gms.location.*
 import edu.ucandroid.weathernotice.R
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -31,8 +26,6 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import edu.ucandroid.weathernotice.dto.Reminder
-import edu.ucandroid.weathernotice.dto.Weather
 import java.text.SimpleDateFormat
 import kotlin.collections.HashMap
 
@@ -51,7 +44,7 @@ class MainFragment : Fragment() {
     }
 
     lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
-    val locationRequestId = 100
+    val LOCATION_REQUEST_ID = 100
 
     private lateinit var viewModel: MainViewModel
 
@@ -283,7 +276,7 @@ class MainFragment : Fragment() {
     fun askLocationPermission() {
 
         requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                locationRequestId)
+                LOCATION_REQUEST_ID)
 
 
     }
@@ -295,7 +288,7 @@ class MainFragment : Fragment() {
             grantResults: IntArray
     ) {
 
-        if (requestCode == locationRequestId) {
+        if (requestCode == LOCATION_REQUEST_ID) {
 
             if (grantResults != null && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
