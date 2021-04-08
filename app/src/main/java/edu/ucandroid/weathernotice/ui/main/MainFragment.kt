@@ -33,6 +33,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import edu.ucandroid.weathernotice.MainActivity
 
 class MainFragment : Fragment() {
 
@@ -75,9 +76,7 @@ class MainFragment : Fragment() {
         viewModel.fetchLocations()
 
         btnLocation.setOnClickListener {
-
             getLocation()
-
         }
         btnSave.setOnClickListener {
             saveString()
@@ -89,6 +88,9 @@ class MainFragment : Fragment() {
         btnEdit.setOnClickListener {
             //to set a reminder
             timepickerDialog()
+        }
+        btnList.setOnClickListener {
+            (activity as MainActivity).onSwipeLeft()
         }
 
     }

@@ -95,13 +95,13 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Top Swip", Toast.LENGTH_LONG).show()
     }
     //swipe left to show the list screen
-    private fun onSwipeLeft() {
+    internal fun onSwipeLeft() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, listFragment)
             .commitNow()
     }
     //swipe right to show the main screen
-    private fun onSwipeRight(){
+    internal fun onSwipeRight(){
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, mainFragment)
             .commitNow()
