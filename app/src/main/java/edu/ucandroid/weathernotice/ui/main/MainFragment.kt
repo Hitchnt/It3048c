@@ -1,6 +1,8 @@
 package edu.ucandroid.weathernotice.ui.main
 import android.Manifest
+import android.app.Activity
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -33,11 +35,15 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import edu.ucandroid.weathernotice.MainActivity
+import edu.ucandroid.weathernotice.dto.Weather
 
 class MainFragment : Fragment() {
 
     private var user : FirebaseUser? = null
     private val AUTH_REQUEST_CODE = 2002
+    var weatherDesc = ""
+    var weatherList = ""
 
     companion object {
         fun newInstance() = MainFragment()
@@ -116,7 +122,7 @@ class MainFragment : Fragment() {
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
                 Response.Listener { response ->
-                    //set weather dat to UI fields
+                    //set weather data to UI fields
                     var typeText : String
                     val data = response.getJSONArray("data").getJSONObject(0);
                     if(data.getDouble("precip") != 0.0) { typeText = "Rainy" }
@@ -131,7 +137,13 @@ class MainFragment : Fragment() {
                     pressure.text = data.getString("pres").toString() + " millibars"
                     windSpeed.text = data.getString("wind_spd").toString() + " m/s"
 
+                   // var intent = Intent(getActivity(), MainActivity::class.java)
+                     weatherDesc = data.getString("weather").toString().substringAfterLast(":").substringBeforeLast("}")
+                     weatherList = weatherDesc + ", " + data.getString("temp").toString()
 
+                    //passData(WeatherList)
+                 /*   intent.putExtra("key", WeatherList)
+                    onActivityResult(WEATHER_DATA_TO_ACTIVITY_CODE, Activity.RESULT_OK, intent)*/
                 },
                 Response.ErrorListener { error ->
                     Log.d("ERROR", error.toString())
@@ -183,7 +195,7 @@ class MainFragment : Fragment() {
                 Toast.makeText(activity,"record added",Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-            Toast.makeText(activity,"record added",Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity,"record not added",Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -304,6 +316,9 @@ class MainFragment : Fragment() {
         if(requestCode == AUTH_REQUEST_CODE){
           user = FirebaseAuth.getInstance().currentUser
         }
+       /* if(requestCode == WEATHER_DATA_TO_ACTIVITY_CODE){
+
+        }*/
     }
 }
 

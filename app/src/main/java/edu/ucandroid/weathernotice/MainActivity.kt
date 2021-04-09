@@ -1,6 +1,10 @@
 package edu.ucandroid.weathernotice
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.TimePickerDialog
+import android.content.Context
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.GestureDetector
@@ -8,6 +12,8 @@ import android.view.MotionEvent
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
 import edu.ucandroid.weathernotice.fragments.Fragment
@@ -15,6 +21,11 @@ import edu.ucandroid.weathernotice.fragments.ListFragment
 import edu.ucandroid.weathernotice.ui.main.MainFragment
 import edu.ucandroid.weathernotice.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -22,6 +33,10 @@ class MainActivity : AppCompatActivity() {
     private  lateinit var detector: GestureDetectorCompat
     private lateinit var listFragment: ListFragment
     private lateinit var mainFragment: MainFragment
+    private  var CHANNEL_ID= "channelis_example_01"
+    private  var notificationId = 101
+    var weatherDesc = ""
+    var weatherTemp = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +49,60 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, mainFragment)
                 .commitNow()
         }
+        createNotificationchannel()
         detector = GestureDetectorCompat(this,WeatherGestureListener())
+        loop()
+    }
+
+     fun onDataPass(data: String) {
+         if(data != "") {
+             var dataSplit = data.split(",")
+             weatherDesc = dataSplit[0]
+             weatherTemp = dataSplit[1]
+         }
+    }
+
+    private fun loop() {
+        CoroutineScope(IO).
+        launch {
+            delay(10000)
+            CoroutineScope(Main).launch {
+                activefunction()
+                loop()
+            }
+        }
+    }
+    private fun activefunction() {
+        //Toast.makeText( this,"test", Toast.LENGTH_SHORT).show()
+        //createNotificationchannel()
+        sendNotification()
+    }
+
+    private fun createNotificationchannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ){
+            val name = "noticication title"
+            val descriptionText = "description Text"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID,name,importance).apply {
+                description=descriptionText
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+    fun sendNotification(){
+        //make if test on weather status from API
+        onDataPass(mainFragment.weatherList)
+        val builder = NotificationCompat.Builder(this,CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle(weatherDesc)
+                //showDateTime.text = data.getString("weather").toString().substringAfterLast(":'").substringBeforeLast("'}")
+                .setContentText("wear a rain coat")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(this)){
+            notify(notificationId,builder.build())
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
