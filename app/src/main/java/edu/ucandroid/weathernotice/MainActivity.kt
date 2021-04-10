@@ -27,6 +27,7 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalTime
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private  var notificationId = 101
     var weatherDesc = ""
     var weatherTemp = ""
+    var weatherPrecip = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +61,7 @@ class MainActivity : AppCompatActivity() {
              var dataSplit = data.split(",")
              weatherDesc = dataSplit[0]
              weatherTemp = dataSplit[1]
+             weatherPrecip = dataSplit[2]
          }
     }
 
@@ -75,7 +78,9 @@ class MainActivity : AppCompatActivity() {
     private fun activefunction() {
         //Toast.makeText( this,"test", Toast.LENGTH_SHORT).show()
         //createNotificationchannel()
-        sendNotification()
+        if(mainFragment.weatherList != "") {
+            sendNotification()
+        }
     }
 
     private fun createNotificationchannel(){
@@ -92,16 +97,28 @@ class MainActivity : AppCompatActivity() {
     }
     fun sendNotification(){
         //make if test on weather status from API
+        var notificationMessage = ""
+        val currentTime = LocalTime.now()
         onDataPass(mainFragment.weatherList)
+        if (weatherTemp.toDouble() <= 0){
+            notificationMessage = "cover plants"
+        }
+        else if (weatherTemp.toDouble() > 0 && weatherPrecip.toDouble() > 0){
+            notificationMessage = "wear a rain coat"
+        }
+        else{
+            notificationMessage= "No notifications"
+        }
+
         val builder = NotificationCompat.Builder(this,CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(weatherDesc)
-                //showDateTime.text = data.getString("weather").toString().substringAfterLast(":'").substringBeforeLast("'}")
-                .setContentText("wear a rain coat")
+                .setContentText(notificationMessage)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
+        //if (mainFragment.remindTime == currentTime.toString()){
         with(NotificationManagerCompat.from(this)){
             notify(notificationId,builder.build())
+        //}
         }
     }
 

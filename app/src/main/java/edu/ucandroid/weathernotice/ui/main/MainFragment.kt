@@ -43,7 +43,10 @@ class MainFragment : Fragment() {
     private var user : FirebaseUser? = null
     private val AUTH_REQUEST_CODE = 2002
     var weatherDesc = ""
+    var weatherTemp = ""
+    var weatherPrecip = ""
     var weatherList = ""
+    var remindTime = ""
 
     companion object {
         fun newInstance() = MainFragment()
@@ -105,6 +108,7 @@ class MainFragment : Fragment() {
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
             tTime.text = SimpleDateFormat("HH:mm").format(cal.time)
+            remindTime = SimpleDateFormat("HH:mm").format(cal.time)
         }
         TimePickerDialog(context, R.style.TimePickerTheme, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
     }
@@ -139,7 +143,9 @@ class MainFragment : Fragment() {
 
                    // var intent = Intent(getActivity(), MainActivity::class.java)
                      weatherDesc = data.getString("weather").toString().substringAfterLast(":").substringBeforeLast("}")
-                     weatherList = weatherDesc + ", " + data.getString("temp").toString()
+                     weatherTemp = data.getString("temp").toString()
+                     weatherPrecip = data.getString("precip").toString()
+                     weatherList = weatherDesc + "," + weatherTemp + "," + weatherPrecip
 
                     //passData(WeatherList)
                  /*   intent.putExtra("key", WeatherList)
