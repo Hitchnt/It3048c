@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
@@ -91,6 +92,36 @@ class MainFragment : Fragment() {
         }
         btnList.setOnClickListener {
             (activity as MainActivity).onSwipeLeft()
+        }
+        btnWeatherMenu.setOnClickListener {
+            var popup = PopupMenu(context, btnWeatherMenu)
+            popup.setOnMenuItemClickListener { item ->
+                when(item.itemId){
+                    R.id.weather1 ->{
+                       tWeather.text = "sunny"
+                        true
+                    }
+                    R.id.weather2 ->{
+                        tWeather.text = "rainy"
+                        true
+                    }
+                    R.id.weather3 ->{
+                        tWeather.text = "thunderstorm"
+                        true
+                    }
+                    R.id.weather4 ->{
+                        tWeather.text = "windy"
+                        true
+                    }
+                    R.id.weather5 ->{
+                        tWeather.text = "cloudy"
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popup.inflate(R.menu.menu_weather)
+            popup.show()
         }
 
     }
