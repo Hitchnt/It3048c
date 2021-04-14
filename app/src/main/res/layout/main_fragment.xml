@@ -5,107 +5,107 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#63CCFF"
-    android:scrollbarSize="8dp"
-    tools:context=".MainActivity">
-
-    <AutoCompleteTextView
-        android:id="@+id/enterCityname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="65dp"
-        android:ems="10"
-        android:hint="@string/enter_city_name"
-        android:inputType="textPersonName"
-        android:paddingStart="15dp"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FDFCFC"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appTitle"
-        tools:ignore="RtlSymmetry" />
+        android:background="#63CCFF"
+        android:scrollbarSize="8dp"
+        tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btnSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="15dp"
-        android:background="#3C54EE"
-        android:padding="10dp"
-        android:text="Search Weather"
-        android:textColor="#FBFBFB"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterCityname"
-        tools:ignore="HardcodedText" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="15dp"
-        android:background="#6B0C0C0C"
-        android:scrollbarSize="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSearch">
-
-        <TextView
-            android:id="@+id/showDateTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/date_time"
-            android:textColor="#FAF7F7"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/showCountry" />
-
-        <ImageView
-            android:id="@+id/imgWeather"
-            android:layout_width="156dp"
-            android:layout_height="154dp"
-            android:layout_marginTop="1dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/cloud" />
-
-        <TextView
-            android:id="@+id/showCountry"
-            android:layout_width="wrap_content"
+        <AutoCompleteTextView
+            android:id="@+id/enterCityname"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/country"
-            android:textColor="#FFFEFE"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/showCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/city"
+            android:layout_marginEnd="65dp"
+            android:ems="10"
+            android:hint="@string/enter_city_name"
+            android:inputType="textPersonName"
+            android:paddingStart="15dp"
             android:textColor="#FFFFFF"
+            android:textColorHint="#FDFCFC"
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/showCountry"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appTitle"
+            tools:ignore="RtlSymmetry" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:background="#3C54EE"
+            android:padding="10dp"
+            android:text="Search Weather"
+            android:textColor="#FBFBFB"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enterCityname"
+            tools:ignore="HardcodedText" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            android:background="#6B0C0C0C"
+            android:scrollbarSize="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSearch">
+
+            <TextView
+                android:id="@+id/showDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/date_time"
+                android:textColor="#FAF7F7"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/showCountry" />
+
+            <ImageView
+                android:id="@+id/imgWeather"
+                android:layout_width="156dp"
+                android:layout_height="154dp"
+                android:layout_marginTop="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/cloud" />
+
+            <TextView
+                android:id="@+id/showCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/country"
+                android:textColor="#FFFEFE"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/showCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/city"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/showCountry"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout3"
@@ -304,15 +304,26 @@
                 app:layout_constraintTop_toBottomOf="@+id/tRemindme"/>
 
             <TextView
-                android:id="@+id/tTemperature"
+                android:id="@+id/tCompare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:text="________"
+                android:text="__"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/tTempCondition"
+                app:layout_constraintTop_toBottomOf="@+id/tWeather" />
+
+            <TextView
+                android:id="@+id/tTemperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="_____"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/btnCompareMenu"
                 app:layout_constraintTop_toBottomOf="@+id/tWeather" />
 
             <ImageButton
@@ -325,24 +336,27 @@
                 app:layout_constraintStart_toEndOf="@+id/tWeather"
                 app:layout_constraintTop_toBottomOf="@+id/windSpeed"/>
 
+            <ImageButton
+                android:id="@+id/btnCompareMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/tCompare"
+                app:layout_constraintTop_toBottomOf="@+id/tWeather"
+                app:srcCompat="@android:drawable/arrow_down_float" />
+
+            <ImageButton
+                android:id="@+id/btnMore"
+                android:layout_width="37dp"
+                android:layout_height="31dp"
+                app:layout_constraintStart_toEndOf="@+id/tTemperature"
+                app:layout_constraintTop_toBottomOf="@+id/tWeather"
+                app:srcCompat="@drawable/ic_more" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:background="#6B0C0C0C"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-
-        <TextView
-            android:id="@+id/showTemperature"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -350,74 +364,88 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
-            android:text="@string/temperature"
-            android:textColor="#FAF9F9"
-            android:textSize="50sp"
+            android:background="#6B0C0C0C"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <TextView
+                android:id="@+id/showTemperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:text="@string/temperature"
+                android:textColor="#FAF9F9"
+                android:textSize="50sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/appTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/weather_notice"
+            android:textSize="45sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/appTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/weather_notice"
-        android:textSize="45sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/btnLocation"
-        android:layout_width="56dp"
-        android:layout_height="47dp"
-        app:layout_constraintStart_toEndOf="@+id/enterCityname"
-        app:layout_constraintTop_toBottomOf="@+id/appTitle"
-        app:srcCompat="@drawable/ic_gps" />
+        <ImageButton
+            android:id="@+id/btnLocation"
+            android:layout_width="56dp"
+            android:layout_height="47dp"
+            app:layout_constraintStart_toEndOf="@+id/enterCityname"
+            app:layout_constraintTop_toBottomOf="@+id/appTitle"
+            app:srcCompat="@drawable/ic_gps" />
 
 
-    <ImageButton
-        android:id="@+id/btnList"
-        android:layout_width="75dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="15dp"
-        android:background="#3C54EE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnSave"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
-        app:srcCompat="@drawable/ic_list" />
+        <ImageButton
+            android:id="@+id/btnList"
+            android:layout_width="75dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:background="#3C54EE"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnSave"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+            app:srcCompat="@drawable/ic_list" />
 
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="75dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="15dp"
-        android:background="#3C54EE"
-        android:text="Save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="75dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:background="#3C54EE"
+            android:text="Save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
-    <Button
-        android:id="@+id/btnEdit"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="15dp"
-        android:background="#3C54EE"
-        android:text="Edit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnSave"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+        <Button
+            android:id="@+id/btnEdit"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="15dp"
+            android:background="#3C54EE"
+            android:text="Edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnSave"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

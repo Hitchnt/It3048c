@@ -1,5 +1,6 @@
 package edu.ucandroid.weathernotice.ui.main
 import android.Manifest
+import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,11 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.NumberPicker
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -53,12 +56,12 @@ class MainFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         //Not yet implemented
-       /* val queue = Volley.newRequestQueue(getActivity());
-        val url = "https://api.weatherbit.io/v2.0/current?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA";
-        val urltmrw = "https://api.weatherbit.io/v2.0/forecast/hourly?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA&hours=24";
-        val urlomrw = "https://api.weatherbit.io/v2.0/forecast/hourly?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA";
-        val sdf_to = SimpleDateFormat("EEEE");
-        val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");*/
+        /* val queue = Volley.newRequestQueue(getActivity());
+         val url = "https://api.weatherbit.io/v2.0/current?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA";
+         val urltmrw = "https://api.weatherbit.io/v2.0/forecast/hourly?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA&hours=24";
+         val urlomrw = "https://api.weatherbit.io/v2.0/forecast/hourly?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA";
+         val sdf_to = SimpleDateFormat("EEEE");
+         val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");*/
 
 
         return inflater.inflate(R.layout.main_fragment, container, false)
@@ -70,7 +73,7 @@ class MainFragment : Fragment() {
 
         //set observer of location info for autocomplete
         viewModel.locationinfos.observe(this, androidx.lifecycle.Observer {
-            locationinfos -> enterCityname.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, locationinfos))
+                locationinfos -> enterCityname.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, locationinfos))
 
         })
 
@@ -84,21 +87,44 @@ class MainFragment : Fragment() {
         }
         btnSearch.setOnClickListener {
             if (enterCityname.text != null)
-            GetWeatherForLocation(enterCityname.text.toString())
+                GetWeatherForLocation(enterCityname.text.toString())
         }
         btnEdit.setOnClickListener {
             //to set a reminder
             timepickerDialog()
         }
+        btnMore.setOnClickListener {
+            numberPickerCustom()
+        }
         btnList.setOnClickListener {
             (activity as MainActivity).onSwipeLeft()
         }
+
+        btnCompareMenu.setOnClickListener {
+            var popup2 = PopupMenu(context, btnCompareMenu)
+            popup2.setOnMenuItemClickListener { item ->
+                when(item.itemId){
+                    R.id.compare1 ->{
+                        tCompare.text = ">"
+                        true
+                    }
+                    R.id.compare2 ->{
+                        tCompare.text = "<"
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popup2.inflate(R.menu.mune_compare)
+            popup2.show()
+        }
+
         btnWeatherMenu.setOnClickListener {
             var popup = PopupMenu(context, btnWeatherMenu)
             popup.setOnMenuItemClickListener { item ->
                 when(item.itemId){
                     R.id.weather1 ->{
-                       tWeather.text = "sunny"
+                        tWeather.text = "sunny"
                         true
                     }
                     R.id.weather2 ->{
@@ -126,6 +152,25 @@ class MainFragment : Fragment() {
 
     }
 
+    fun numberPickerCustom() {
+        val d = AlertDialog.Builder(context)
+        val inflater = this.layoutInflater
+        val dialogView = inflater.inflate(R.layout.number_picker_dialog, null)
+        d.setTitle("Choose temperature")
+        d.setView(dialogView)
+        val numberPicker = dialogView.findViewById<NumberPicker>(R.id.dialog_number_picker)
+        numberPicker.maxValue = 50
+        numberPicker.minValue = 0
+        numberPicker.wrapSelectorWheel = false
+        numberPicker.setOnValueChangedListener { numberPicker, i, i1 -> tTemperature.text = "$i1" }
+        d.setPositiveButton("Done") { dialogInterface, i ->
+                println("onClick: " + numberPicker.value)
+        }
+        d.setNegativeButton("Cancel") { dialogInterface, i -> }
+        val alertDialog = d.create()
+        alertDialog.show()
+    }
+
     private fun timepickerDialog() {
         val cal = Calendar.getInstance()
         val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
@@ -148,27 +193,27 @@ class MainFragment : Fragment() {
         val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
-                Response.Listener { response ->
-                    //set weather dat to UI fields
-                    var typeText : String
-                    val data = response.getJSONArray("data").getJSONObject(0);
-                    if(data.getDouble("precip") != 0.0) { typeText = "Rainy" }
-                    else if(data.getInt("clouds") > 50) { typeText = "Cloudy" }
-                    else { typeText = "Clear" }
-                    humidity.text = data.getString("rh").toString() + "%"
-                    sunset.text = data.getString("sunset").toString()
-                    sunrise.text = data.getString("sunrise").toString()
-                    showTemperature.text = data.getString("temp").toString() + "º Celsius"
-                    showCountry.text = data.getString("country_code").toString()
-                    showCity.text = data.getString("city_name").toString()
-                    pressure.text = data.getString("pres").toString() + " millibars"
-                    windSpeed.text = data.getString("wind_spd").toString() + " m/s"
+            Response.Listener { response ->
+                //set weather dat to UI fields
+                var typeText : String
+                val data = response.getJSONArray("data").getJSONObject(0);
+                if(data.getDouble("precip") != 0.0) { typeText = "Rainy" }
+                else if(data.getInt("clouds") > 50) { typeText = "Cloudy" }
+                else { typeText = "Clear" }
+                humidity.text = data.getString("rh").toString() + "%"
+                sunset.text = data.getString("sunset").toString()
+                sunrise.text = data.getString("sunrise").toString()
+                showTemperature.text = data.getString("temp").toString() + "º Celsius"
+                showCountry.text = data.getString("country_code").toString()
+                showCity.text = data.getString("city_name").toString()
+                pressure.text = data.getString("pres").toString() + " millibars"
+                windSpeed.text = data.getString("wind_spd").toString() + " m/s"
 
 
-                },
-                Response.ErrorListener { error ->
-                    Log.d("ERROR", error.toString())
-                })
+            },
+            Response.ErrorListener { error ->
+                Log.d("ERROR", error.toString())
+            })
         queue.add(request);
 
     }
@@ -186,22 +231,22 @@ class MainFragment : Fragment() {
     }
 
     private fun saveString() {
-     /**
+        /**
 
-       if(user == null) {
-       logon()
-    }
-      //  var reminder = Reminder().apply{
-    var reminder = Reminder().apply {
+        if(user == null) {
+        logon()
+        }
+        //  var reminder = Reminder().apply{
+        var reminder = Reminder().apply {
         city = "citytest"
         massage="massagetest"
-    }
-        * */
+        }
+         * */
         saveFireStore("input from users","just even more input from the la  user")
-       // viewModel.save(reminder,user!!)
+        // viewModel.save(reminder,user!!)
 
-      //  }
-       }
+        //  }
+    }
 
 
     fun saveFireStore(city:String,reminder:String){
@@ -216,7 +261,7 @@ class MainFragment : Fragment() {
                 Toast.makeText(activity,"record added",Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-            Toast.makeText(activity,"record added",Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity,"record added",Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -242,20 +287,20 @@ class MainFragment : Fragment() {
 
 
         if (ContextCompat.checkSelfPermission(
-                        context!!,
-                        Manifest.permission.ACCESS_FINE_LOCATION
+                context!!,
+                Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
-                        context!!,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-             ) != PackageManager.PERMISSION_GRANTED)
+                context!!,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED)
 
         {
 
             return
         }
         mFusedLocationProviderClient.requestLocationUpdates(
-                locationRequest, mLocationCallback,
-                Looper.myLooper()
+            locationRequest, mLocationCallback,
+            Looper.myLooper()
         )
     }
 
@@ -278,9 +323,9 @@ class MainFragment : Fragment() {
         var geocoder: Geocoder = Geocoder(activity!!.applicationContext, Locale.getDefault())
 
         addressList = geocoder.getFromLocation(
-                location.latitude,
-                location.longitude,
-                1
+            location.latitude,
+            location.longitude,
+            1
         ) as ArrayList<Address>
         /** this get the full address **/
         //enterCityname.setText(addressList.get(0).getAddressLine(0))
@@ -295,9 +340,9 @@ class MainFragment : Fragment() {
     fun checkForLocationPermission(): Boolean {
 
         if (ContextCompat.checkSelfPermission(
-                        context!!,
-                        Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED
+                context!!,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED
         )
             return true
 
@@ -309,16 +354,16 @@ class MainFragment : Fragment() {
     fun askLocationPermission() {
 
         requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                LOCATION_REQUEST_ID)
+            LOCATION_REQUEST_ID)
 
 
     }
 
 
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
     ) {
 
         if (requestCode == LOCATION_REQUEST_ID) {
@@ -335,7 +380,7 @@ class MainFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == AUTH_REQUEST_CODE){
-          user = FirebaseAuth.getInstance().currentUser
+            user = FirebaseAuth.getInstance().currentUser
         }
     }
 }
