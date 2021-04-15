@@ -120,7 +120,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/humidity"
@@ -301,7 +302,7 @@
                 android:textColor="#FFFFFFFF"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tRemindme"/>
+                app:layout_constraintTop_toBottomOf="@+id/tRemindme" />
 
             <TextView
                 android:id="@+id/tCompare"
@@ -330,11 +331,11 @@
                 android:id="@+id/btnWeatherMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/tWeather"
+                app:layout_constraintTop_toBottomOf="@+id/windSpeed"
                 app:srcCompat="@android:drawable/arrow_down_float"
                 tools:layout_editor_absoluteX="291dp"
-                tools:layout_editor_absoluteY="155dp"
-                app:layout_constraintStart_toEndOf="@+id/tWeather"
-                app:layout_constraintTop_toBottomOf="@+id/windSpeed"/>
+                tools:layout_editor_absoluteY="155dp" />
 
             <ImageButton
                 android:id="@+id/btnCompareMenu"
@@ -351,6 +352,15 @@
                 app:layout_constraintStart_toEndOf="@+id/tTemperature"
                 app:layout_constraintTop_toBottomOf="@+id/tWeather"
                 app:srcCompat="@drawable/ic_more" />
+
+            <ImageButton
+                android:id="@+id/btnEdit"
+                android:layout_width="44dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toEndOf="@+id/tTime"
+                app:layout_constraintTop_toBottomOf="@+id/tTempCondition"
+                app:srcCompat="@drawable/ic_time" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -434,14 +444,15 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
         <Button
-            android:id="@+id/btnEdit"
-            android:layout_width="70dp"
+            android:id="@+id/btnLogin"
+            android:layout_width="78dp"
             android:layout_height="40dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="60dp"
             android:layout_marginBottom="15dp"
             android:background="#3C54EE"
-            android:text="Edit"
+            android:text="Login"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnSave"
             app:layout_constraintStart_toStartOf="parent"
