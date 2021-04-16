@@ -150,10 +150,49 @@ class MainFragment : Fragment() {
             popup.inflate(R.menu.menu_weather)
             popup.show()
         }
+        switchTemp.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                showTemp()
+            } else {
+                hideTemp()
+            }
+        }
+        switchWeather.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                showWeather()
+            } else {
+                hideWeather()
+            }
+        }
+    }
+    fun  showWeather(){
+        tWeather.visibility = View.VISIBLE
+        tWeatheris.visibility = View.VISIBLE
+        btnWeatherMenu.visibility = View.VISIBLE
+    }
 
+    fun hideWeather(){
+        tWeatheris.visibility = View.GONE
+        tWeather.visibility = View.GONE
+        btnWeatherMenu.visibility = View.GONE
+    }
+    fun showTemp(){
+        tTempCondition.visibility = View.VISIBLE
+        tCompare.visibility = View.VISIBLE
+        btnCompareMenu.visibility = View.VISIBLE
+        tTemperature.visibility = View.VISIBLE
+        btnMore.visibility = View.VISIBLE
+    }
 
+    fun hideTemp(){
+        tTempCondition.visibility = View.GONE
+        tCompare.visibility = View.GONE
+        btnCompareMenu.visibility = View.GONE
+        tTemperature.visibility = View.GONE
+        btnMore.visibility = View.GONE
 
     }
+
 
     fun numberPickerCustom() {
         val d = AlertDialog.Builder(context)

@@ -249,38 +249,38 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
-                android:text="Remind me if it is "
+                android:text="Remind me at "
                 android:textColor="#FFFFFFFF"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tWindSpeed" />
 
             <TextView
-                android:id="@+id/tTime"
+                android:id="@+id/tWeather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 android:text="_______"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/txtAt"
-                app:layout_constraintTop_toBottomOf="@+id/tTempCondition" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tWeatheris" />
 
             <TextView
-                android:id="@+id/txtAt"
+                android:id="@+id/tWeatheris"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
-                android:text="At"
+                android:layout_marginBottom="10dp"
+                android:text="The weather is"
                 android:textColor="#FFFFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tTempCondition" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/tWeather"
+                android:id="@+id/tTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -298,7 +298,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
-                android:text="or the temperature is "
+                android:text="The temperature is "
                 android:textColor="#FFFFFFFF"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -314,35 +314,35 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/tTempCondition"
-                app:layout_constraintTop_toBottomOf="@+id/tWeather" />
+                app:layout_constraintTop_toBottomOf="@+id/tTime" />
 
             <TextView
                 android:id="@+id/tTemperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="_____"
+                android:text="___"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/btnCompareMenu"
-                app:layout_constraintTop_toBottomOf="@+id/tWeather" />
+                app:layout_constraintTop_toBottomOf="@+id/tTime" />
 
             <ImageButton
                 android:id="@+id/btnWeatherMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+
                 app:layout_constraintStart_toEndOf="@+id/tWeather"
-                app:layout_constraintTop_toBottomOf="@+id/windSpeed"
-                app:srcCompat="@android:drawable/arrow_down_float"
-                tools:layout_editor_absoluteX="291dp"
-                tools:layout_editor_absoluteY="155dp" />
+                app:srcCompat="@android:drawable/arrow_down_float" />
 
             <ImageButton
                 android:id="@+id/btnCompareMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@+id/tCompare"
-                app:layout_constraintTop_toBottomOf="@+id/tWeather"
+                app:layout_constraintTop_toBottomOf="@+id/tTime"
                 app:srcCompat="@android:drawable/arrow_down_float" />
 
             <ImageButton
@@ -350,7 +350,7 @@
                 android:layout_width="37dp"
                 android:layout_height="31dp"
                 app:layout_constraintStart_toEndOf="@+id/tTemperature"
-                app:layout_constraintTop_toBottomOf="@+id/tWeather"
+                app:layout_constraintTop_toBottomOf="@+id/tTime"
                 app:srcCompat="@drawable/ic_more" />
 
             <ImageButton
@@ -359,8 +359,37 @@
                 android:layout_height="29dp"
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toEndOf="@+id/tTime"
-                app:layout_constraintTop_toBottomOf="@+id/tTempCondition"
+                app:layout_constraintTop_toBottomOf="@+id/windSpeed"
                 app:srcCompat="@drawable/ic_time" />
+
+            <TextView
+                android:id="@+id/tIf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="if"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/btnEdit"
+                app:layout_constraintTop_toBottomOf="@+id/windSpeed" />
+
+            <Switch
+                android:id="@+id/switchTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tTime" />
+
+            <Switch
+                android:id="@+id/switchWeather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text=""
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
