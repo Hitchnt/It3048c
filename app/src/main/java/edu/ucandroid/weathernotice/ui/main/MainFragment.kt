@@ -86,7 +86,7 @@ class MainFragment : Fragment() {
 
         btnLocation.setOnClickListener {
             getLocation()
-           // readFireStoreData()
+            readFireStoreData()
         }
         btnSave.setOnClickListener {
             saveString()
@@ -357,11 +357,13 @@ class MainFragment : Fragment() {
                         )
                         userFirebaseData.add(thisthing)
                     }
+                }.addOnSuccessListener {
+                    Adamslogic(userFirebaseData)
                 }
                 .addOnFailureListener { exception ->
                     Log.w(TAG, "Error getting documents: ", exception)
                 }
-        Adamslogic(userFirebaseData)
+        //Adamslogic(userFirebaseData)
 
 /**
         val db = FirebaseFirestore.getInstance()
