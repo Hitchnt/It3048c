@@ -1,18 +1,17 @@
 package edu.ucandroid.weathernotice.ui.main
+
 import android.Manifest
 import android.app.AlertDialog
 import android.app.TimePickerDialog
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
-import android.view.ContextThemeWrapper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,24 +20,29 @@ import android.widget.NumberPicker
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.google.android.gms.location.*
-import edu.ucandroid.weathernotice.R
-import kotlinx.android.synthetic.main.main_fragment.*
-import java.util.*
-import kotlin.collections.ArrayList
-import com.firebase.ui.auth.AuthUI
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
-import java.text.SimpleDateFormat
-import kotlin.collections.HashMap
-
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.firebase.ui.auth.AuthUI
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import edu.ucandroid.weathernotice.MainActivity
+import edu.ucandroid.weathernotice.R
+import edu.ucandroid.weathernotice.dto.Reminder
 import kotlinx.android.synthetic.main.list_fragment.*
+import kotlinx.android.synthetic.main.main_fragment.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class MainFragment : Fragment() {
 
@@ -73,8 +77,8 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         //set observer of location info for autocomplete
-        viewModel.locationinfos.observe(this, androidx.lifecycle.Observer {
-                locationinfos -> enterCityname.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, locationinfos))
+        viewModel.locationinfos.observe(this, androidx.lifecycle.Observer { locationinfos ->
+            enterCityname.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, locationinfos))
 
         })
 
@@ -82,6 +86,7 @@ class MainFragment : Fragment() {
 
         btnLocation.setOnClickListener {
             getLocation()
+           // readFireStoreData()
         }
         btnSave.setOnClickListener {
             saveString()
@@ -100,16 +105,19 @@ class MainFragment : Fragment() {
         btnList.setOnClickListener {
             (activity as MainActivity).onSwipeLeft()
         }
+        btnLogin.setOnClickListener {
+            logon()
+        }
 
         btnCompareMenu.setOnClickListener {
             var popup2 = PopupMenu(context, btnCompareMenu)
             popup2.setOnMenuItemClickListener { item ->
                 when(item.itemId){
-                    R.id.compare1 ->{
+                    R.id.compare1 -> {
                         tCompare.text = ">"
                         true
                     }
-                    R.id.compare2 ->{
+                    R.id.compare2 -> {
                         tCompare.text = "<"
                         true
                     }
@@ -124,23 +132,23 @@ class MainFragment : Fragment() {
             var popup = PopupMenu(context, btnWeatherMenu)
             popup.setOnMenuItemClickListener { item ->
                 when(item.itemId){
-                    R.id.weather1 ->{
+                    R.id.weather1 -> {
                         tWeather.text = "sunny"
                         true
                     }
-                    R.id.weather2 ->{
+                    R.id.weather2 -> {
                         tWeather.text = "rainy"
                         true
                     }
-                    R.id.weather3 ->{
+                    R.id.weather3 -> {
                         tWeather.text = "thunderstorm"
                         true
                     }
-                    R.id.weather4 ->{
+                    R.id.weather4 -> {
                         tWeather.text = "windy"
                         true
                     }
-                    R.id.weather5 ->{
+                    R.id.weather5 -> {
                         tWeather.text = "cloudy"
                         true
                     }
@@ -235,27 +243,31 @@ class MainFragment : Fragment() {
         val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
-            Response.Listener { response ->
-                //set weather dat to UI fields
-                var typeText : String
-                val data = response.getJSONArray("data").getJSONObject(0);
-                if(data.getDouble("precip") != 0.0) { typeText = "Rainy" }
-                else if(data.getInt("clouds") > 50) { typeText = "Cloudy" }
-                else { typeText = "Clear" }
-                humidity.text = data.getString("rh").toString() + "%"
-                sunset.text = data.getString("sunset").toString()
-                sunrise.text = data.getString("sunrise").toString()
-                showTemperature.text = data.getString("temp").toString() + "º Celsius"
-                showCountry.text = data.getString("country_code").toString()
-                showCity.text = data.getString("city_name").toString()
-                pressure.text = data.getString("pres").toString() + " millibars"
-                windSpeed.text = data.getString("wind_spd").toString() + " m/s"
+                Response.Listener { response ->
+                    //set weather dat to UI fields
+                    var typeText: String
+                    val data = response.getJSONArray("data").getJSONObject(0);
+                    if (data.getDouble("precip") != 0.0) {
+                        typeText = "Rainy"
+                    } else if (data.getInt("clouds") > 50) {
+                        typeText = "Cloudy"
+                    } else {
+                        typeText = "Clear"
+                    }
+                    humidity.text = data.getString("rh").toString() + "%"
+                    sunset.text = data.getString("sunset").toString()
+                    sunrise.text = data.getString("sunrise").toString()
+                    showTemperature.text = data.getString("temp").toString() + "º Celsius"
+                    showCountry.text = data.getString("country_code").toString()
+                    showCity.text = data.getString("city_name").toString()
+                    pressure.text = data.getString("pres").toString() + " millibars"
+                    windSpeed.text = data.getString("wind_spd").toString() + " m/s"
 
 
-            },
-            Response.ErrorListener { error ->
-                Log.d("ERROR", error.toString())
-            })
+                },
+                Response.ErrorListener { error ->
+                    Log.d("ERROR", error.toString())
+                })
         queue.add(request);
 
     }
@@ -264,50 +276,113 @@ class MainFragment : Fragment() {
 
     private fun logon() {
         var providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build()
-            //,AuthUI.IdpConfig.GoogleBuilder().build()
+                AuthUI.IdpConfig.EmailBuilder().build()
+                //,AuthUI.IdpConfig.GoogleBuilder().build()
         )
         startActivityForResult(
-            AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(), AUTH_REQUEST_CODE
+                AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(), AUTH_REQUEST_CODE
         )
     }
 
     private fun saveString() {
-        /**
-
         if(user == null) {
-        logon()
+            logon()
         }
-        //  var reminder = Reminder().apply{
-        var reminder = Reminder().apply {
-        city = "citytest"
-        massage="massagetest"
-        }
-         * */
-        saveFireStore("input from users","just even more input from the la  user")
+        else{
+        saveFireStore(
+                showCity.text.toString()
+                ,tCompare.text.toString()
+                ,tTemperature.text.toString()
+                ,tTime.text.toString()
+                ,tWeather.text.toString()
+                ,"Hey it happening"
+                ,FirebaseAuth.getInstance().currentUser.email)
         // viewModel.save(reminder,user!!)
-        rcyEvents.adapter?.notifyDataSetChanged()
-        //  }
+        //rcyEvents.adapter?.notifyDataSetChanged()
+         }
     }
 
 
-    fun saveFireStore(city:String,reminder:String){
+    fun saveFireStore(city: String
+                      ,inequality: String
+                      ,temperature: String
+                      ,alertTime: String
+                      ,typeOfWeather:String
+                      ,message: String
+                      ,user: String){
         val db = FirebaseFirestore.getInstance()
-        val Account:MutableMap<String,Any> = HashMap()
-        Account["City"]= city
-        Account["Message"]= reminder
-
+        val account:MutableMap<String, Any> = HashMap()
+        account["City"]= city
+        account["inequality"]= inequality
+        account["Temperature"]= temperature
+        account["AlertTime"]= alertTime
+        account["TypeOfWeather"]= typeOfWeather
+        account["Message"]= message
+        account["UserID"]= user
         db.collection("Reminders")
-            .add(Account)
+            .add(account)
             .addOnSuccessListener {
-                Toast.makeText(activity,"record added",Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "record added", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-                Toast.makeText(activity,"record added",Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "record added", Toast.LENGTH_SHORT).show()
             }
+         //readFireStoreData()
     }
 
 
+    fun readFireStoreData(){
+        var userFirebaseData = ArrayList<Reminder>()
+        // Create a reference to the cities collection
+        val dba = FirebaseFirestore.getInstance()
+        val citiesRef = dba.collection("Reminders")
+        val query = citiesRef.whereEqualTo("UserId", "tyor455@gmail.com")
+        /** The following query returns all the capital cities: */
+        val capitalCities = dba.collection("UserID").whereEqualTo("capital", true)
+
+        dba.collection("Reminders")
+                .whereEqualTo("UserID", "tyor455@gmail.com")
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        Log.d(TAG, "${document.id} => ${document.data}")
+                        var thisthing= Reminder(
+                                city = document.data["City"].toString(),
+                                state = document.data["State"].toString(),
+                                temperature = document.data["Temperature"].toString(),
+                                alertTime = document.data["AlertTime"].toString(),
+                                typeOfWeather = document.data["TypeOfWeather"].toString(),
+                                message = document.data["Message"].toString(),
+                                userID = document.data["UserID"].toString()
+                        )
+                        userFirebaseData.add(thisthing)
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.w(TAG, "Error getting documents: ", exception)
+                }
+        Adamslogic(userFirebaseData)
+
+/**
+        val db = FirebaseFirestore.getInstance()
+        db.collection("Reminders")
+                .get()
+                .addOnCompleteListener{
+                    val result: StringBuffer = StringBuffer()
+                    if(it.isSuccessful){
+                        for(document in it.result!!){
+                            result.append(document.data.getValue("City")).append(" ")
+                            Toast.makeText(activity, result, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+ */
+
+    }
+
+    private fun Adamslogic(userFirebaseData: ArrayList<Reminder>) {
+
+    }
 
 
     fun getLocation() {
@@ -325,24 +400,24 @@ class MainFragment : Fragment() {
         locationRequest.interval = 60000
         locationRequest.fastestInterval = 5000
 
-        mFusedLocationProviderClient = FusedLocationProviderClient( context!!)
+        mFusedLocationProviderClient = FusedLocationProviderClient(context!!)
 
 
         if (ContextCompat.checkSelfPermission(
-                context!!,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
-                context!!,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED)
+                        context!!,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                        context!!,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED)
 
         {
 
             return
         }
         mFusedLocationProviderClient.requestLocationUpdates(
-            locationRequest, mLocationCallback,
-            Looper.myLooper()
+                locationRequest, mLocationCallback,
+                Looper.myLooper()
         )
     }
 
@@ -365,14 +440,14 @@ class MainFragment : Fragment() {
         var geocoder: Geocoder = Geocoder(activity!!.applicationContext, Locale.getDefault())
 
         addressList = geocoder.getFromLocation(
-            location.latitude,
-            location.longitude,
-            1
+                location.latitude,
+                location.longitude,
+                1
         ) as ArrayList<Address>
         /** this get the full address **/
         //enterCityname.setText(addressList.get(0).getAddressLine(0))
         /** this get the city only from address **/
-        enterCityname.setText(addressList[0].locality + " , " + addressList[0].countryCode )
+        enterCityname.setText(addressList[0].locality + " , " + addressList[0].countryCode)
 
 
 
@@ -382,8 +457,8 @@ class MainFragment : Fragment() {
     fun checkForLocationPermission(): Boolean {
 
         if (ContextCompat.checkSelfPermission(
-                context!!,
-                Manifest.permission.ACCESS_FINE_LOCATION)
+                        context!!,
+                        Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
         )
             return true
@@ -396,16 +471,16 @@ class MainFragment : Fragment() {
     fun askLocationPermission() {
 
         requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-            LOCATION_REQUEST_ID)
+                LOCATION_REQUEST_ID)
 
 
     }
 
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
 
         if (requestCode == LOCATION_REQUEST_ID) {
