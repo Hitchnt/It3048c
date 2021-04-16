@@ -38,6 +38,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import edu.ucandroid.weathernotice.MainActivity
+import kotlinx.android.synthetic.main.list_fragment.*
 
 class MainFragment : Fragment() {
 
@@ -150,6 +151,8 @@ class MainFragment : Fragment() {
             popup.show()
         }
 
+
+
     }
 
     fun numberPickerCustom() {
@@ -159,7 +162,7 @@ class MainFragment : Fragment() {
         d.setTitle("Choose temperature")
         d.setView(dialogView)
         val numberPicker = dialogView.findViewById<NumberPicker>(R.id.dialog_number_picker)
-        numberPicker.maxValue = 50
+        numberPicker.maxValue = 80
         numberPicker.minValue = 0
         numberPicker.wrapSelectorWheel = false
         numberPicker.setOnValueChangedListener { numberPicker, i, i1 -> tTemperature.text = "$i1" }
@@ -244,7 +247,7 @@ class MainFragment : Fragment() {
          * */
         saveFireStore("input from users","just even more input from the la  user")
         // viewModel.save(reminder,user!!)
-
+        rcyEvents.adapter?.notifyDataSetChanged()
         //  }
     }
 
