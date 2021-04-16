@@ -358,12 +358,12 @@ class MainFragment : Fragment() {
                         userFirebaseData.add(thisthing)
                     }
                 }.addOnSuccessListener {
-                    Adamslogic(userFirebaseData)
+                    adamslogic(userFirebaseData)
                 }
                 .addOnFailureListener { exception ->
                     Log.w(TAG, "Error getting documents: ", exception)
                 }
-        //Adamslogic(userFirebaseData)
+        //adamslogic(userFirebaseData)
 
 /**
         val db = FirebaseFirestore.getInstance()
@@ -382,7 +382,7 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun Adamslogic(userFirebaseData: ArrayList<Reminder>) {
+    fun adamslogic(userFirebaseData: ArrayList<Reminder>) {
 
     }
 
