@@ -3,6 +3,7 @@ package edu.ucandroid.weathernotice
 import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.Button
@@ -10,18 +11,23 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import edu.ucandroid.weathernotice.fragments.Fragment
 import edu.ucandroid.weathernotice.fragments.ListFragment
-import edu.ucandroid.weathernotice.ui.main.MainFragment
-import edu.ucandroid.weathernotice.ui.main.MainViewModel
+import edu.ucandroid.weathernotice.ui.main.*
+import kotlinx.android.synthetic.main.list_fragment.*
+
 import kotlinx.android.synthetic.main.main_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var detector: GestureDetectorCompat
     private lateinit var listFragment: ListFragment
     private lateinit var mainFragment: MainFragment
+
+    lateinit var weatherList: ArrayList<Weatherinfo>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +40,26 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, mainFragment)
                 .commitNow()
         }
+
+        weatherList = arrayListOf<Weatherinfo>(
+            Weatherinfo("Iron Man"),
+            Weatherinfo("The Incredible Hulk"),
+            Weatherinfo("Iron Man 2"),
+
+        )
+        val recyclerAdapter = RecyclerAdapter(weatherList)
+/**
+        rcyEvents.apply {
+            adapter = recyclerAdapter
+            addItemDecoration(DividerItemDecoration(this@MainActivity, DividerItemDecoration.VERTICAL))
+            setHasFixedSize(true)
+        }
+        */
+
         detector = GestureDetectorCompat(this,WeatherGestureListener())
     }
+
+
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return if (detector.onTouchEvent((event))){
@@ -106,4 +130,6 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.container, mainFragment)
             .commitNow()
     }
+
+
 }

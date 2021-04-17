@@ -9,17 +9,22 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.ucandroid.weathernotice.MainActivity
 import edu.ucandroid.weathernotice.R
 import edu.ucandroid.weathernotice.dto.Event
 import edu.ucandroid.weathernotice.ui.main.MainViewModel
+import edu.ucandroid.weathernotice.ui.main.RecyclerAdapter
+import edu.ucandroid.weathernotice.ui.main.Weatherinfo
 import kotlinx.android.synthetic.main.list_fragment.*
+import kotlinx.android.synthetic.main.main_activity.*
+import java.util.ArrayList
 
 
 class ListFragment : Fragment() {
-
+    lateinit var weatherList: ArrayList<Weatherinfo>
     companion object {
         fun newInstance() = ListFragment()
     }
@@ -43,6 +48,20 @@ class ListFragment : Fragment() {
         rcyEvents.layoutManager = LinearLayoutManager(context)
         rcyEvents.itemAnimator = DefaultItemAnimator()
         //rcyEvents.adapter = EventAdapter(viewModel.locationinfos.events, R.layout.rowlayout)
+
+        weatherList = arrayListOf<Weatherinfo>(
+            Weatherinfo("78 F"),
+            Weatherinfo("72 F"),
+            Weatherinfo("68 F"),
+
+            )
+        val recyclerAdapter = RecyclerAdapter(weatherList)
+
+        rcyEvents.apply {
+            adapter = recyclerAdapter
+            //addItemDecoration(DividerItemDecoration(container?.context, DividerItemDecoration.VERTICAL))
+            //setHasFixedSize(true)
+        }
     }
     
     inner class EventAdapter(val events: List<Event>, val itemLayout: Int) : RecyclerView.Adapter<ListFragment.EventViewHolder>(){
