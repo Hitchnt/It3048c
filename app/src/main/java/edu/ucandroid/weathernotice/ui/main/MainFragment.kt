@@ -357,27 +357,13 @@ class MainFragment : Fragment() {
                         userFirebaseData.add(thisthing)
                     }
                 }.addOnSuccessListener {
-                    adamslogic(userFirebaseData)
+
                 }
                 .addOnFailureListener { exception ->
                     Log.w(TAG, "Error getting documents: ", exception)
                 }
-        //adamslogic(userFirebaseData)
 
-/**
-        val db = FirebaseFirestore.getInstance()
-        db.collection("Reminders")
-                .get()
-                .addOnCompleteListener{
-                    val result: StringBuffer = StringBuffer()
-                    if(it.isSuccessful){
-                        for(document in it.result!!){
-                            result.append(document.data.getValue("City")).append(" ")
-                            Toast.makeText(activity, result, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
- */
+
 
     }
 

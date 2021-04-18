@@ -20,8 +20,8 @@ class RecyclerAdapter ( var userList: ArrayList<Weatherinfo>) :
     override fun getItemCount(): Int = userList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val movie = userList[position]
-        holder.bind(movie)
+        val reminders = userList[position]
+        holder.bind(reminders)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -1,5 +1,6 @@
 package edu.ucandroid.weathernotice.service
 
+import android.content.ContentValues
 import android.util.Log
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,4 +26,7 @@ class FirestoreService {
             Log.d("Firebase", "Save Failed")
         }
     }
+
+
+
 }

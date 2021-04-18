@@ -41,13 +41,7 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
         }
 
-        weatherList = arrayListOf<Weatherinfo>(
-            Weatherinfo("Iron Man"),
-            Weatherinfo("The Incredible Hulk"),
-            Weatherinfo("Iron Man 2"),
 
-        )
-        val recyclerAdapter = RecyclerAdapter(weatherList)
 /**
         rcyEvents.apply {
             adapter = recyclerAdapter
