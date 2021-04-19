@@ -36,9 +36,11 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.ucandroid.weathernotice.MainActivity
 import edu.ucandroid.weathernotice.R
+import edu.ucandroid.weathernotice.dto.Event
 import edu.ucandroid.weathernotice.dto.Reminder
 import kotlinx.android.synthetic.main.list_fragment.*
 import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.android.synthetic.main.rowlayout.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -80,6 +82,7 @@ class MainFragment : Fragment() {
         viewModel.locationinfos.observe(this, androidx.lifecycle.Observer { locationinfos ->
             enterCityname.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, locationinfos))
 
+
         })
 
         viewModel.fetchLocations()
@@ -90,6 +93,8 @@ class MainFragment : Fragment() {
         }
         btnSave.setOnClickListener {
             saveString()
+            (activity as MainActivity).onSwipeLeft()
+
         }
         btnSearch.setOnClickListener {
             if (enterCityname.text != null)
@@ -173,6 +178,7 @@ class MainFragment : Fragment() {
             }
         }
     }
+    
     fun  showWeather(){
         tWeather.visibility = View.VISIBLE
         tWeatheris.visibility = View.VISIBLE
@@ -285,21 +291,20 @@ class MainFragment : Fragment() {
     }
 
     private fun saveString() {
-        if(user == null) {
-            logon()
+            if(user == null) {
+                logon()
+            }
+            else{
+                saveFireStore(
+                        showCity.text.toString()
+                        ,tCompare.text.toString()
+                        ,tTemperature.text.toString()
+                        ,tTime.text.toString()
+                        ,tWeather.text.toString()
+                        ,"Hey it happening"
+                        , com.google.firebase.auth.FirebaseAuth.getInstance().currentUser.email)
         }
-        else{
-        saveFireStore(
-                showCity.text.toString()
-                ,tCompare.text.toString()
-                ,tTemperature.text.toString()
-                ,tTime.text.toString()
-                ,tWeather.text.toString()
-                ,"Hey it happening"
-                ,FirebaseAuth.getInstance().currentUser.email)
         // viewModel.save(reminder,user!!)
-        //rcyEvents.adapter?.notifyDataSetChanged()
-         }
     }
 
 

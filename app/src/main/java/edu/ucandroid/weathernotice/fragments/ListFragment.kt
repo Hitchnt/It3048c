@@ -11,11 +11,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
 import edu.ucandroid.weathernotice.MainActivity
 import edu.ucandroid.weathernotice.R
 import edu.ucandroid.weathernotice.dto.Event
+import edu.ucandroid.weathernotice.dto.Reminder
 import edu.ucandroid.weathernotice.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.list_fragment.*
+import kotlinx.android.synthetic.main.main_fragment.*
 
 
 class ListFragment : Fragment() {
@@ -23,12 +26,15 @@ class ListFragment : Fragment() {
     companion object {
         fun newInstance() = ListFragment()
     }
+    val rootRef = FirebaseFirestore.getInstance()
+    val query = rootRef!!.collection("City")
 
     private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.list_fragment, container, false)
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -39,12 +45,12 @@ class ListFragment : Fragment() {
         btnAdd.setOnClickListener {
             (activity as MainActivity).onSwipeRight()
         }
-        rcyEvents.hasFixedSize()
-        rcyEvents.layoutManager = LinearLayoutManager(context)
-        rcyEvents.itemAnimator = DefaultItemAnimator()
-        //rcyEvents.adapter = EventAdapter(viewModel.locationinfos.events, R.layout.rowlayout)
+        rcyReminder.hasFixedSize()
+        rcyReminder.layoutManager = LinearLayoutManager(context)
+        rcyReminder.itemAnimator = DefaultItemAnimator()
+        rcyReminder.adapter = EventAdapter(viewModel.reminder.events, R.layout.rowlayout)
     }
-    
+
     inner class EventAdapter(val events: List<Event>, val itemLayout: Int) : RecyclerView.Adapter<ListFragment.EventViewHolder>(){
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -55,7 +61,7 @@ class ListFragment : Fragment() {
 
         override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
             val event = events.get(position)
-            holder.updateEvent(event)
+            holder.update(event)
         }
 
         override fun getItemCount(): Int {
@@ -63,15 +69,14 @@ class ListFragment : Fragment() {
         }
 
     }
-    
+
 
     inner class EventViewHolder (itemVIew : View) : RecyclerView.ViewHolder(itemVIew) {
         private var imgWeatherinList : ImageView = itemView.findViewById(R.id.imgWeatherinList)
-        private var lblEventInfo : TextView = itemVIew.findViewById(R.id.lblEventInfo)
+        private var lblCityInfo : TextView = itemVIew.findViewById(R.id.Info1)
 
-        fun  updateEvent (event : Event){
-            lblEventInfo.text = event.toString()
-            
+        fun  update (event: Event){
+            lblCityInfo.text = event.toString()
         }
     }
 
