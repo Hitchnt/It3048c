@@ -3,6 +3,7 @@ package edu.ucandroid.weathernotice
 import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.format.Time
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.Button
@@ -10,19 +11,23 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
+import edu.ucandroid.weathernotice.dto.Reminder
 import edu.ucandroid.weathernotice.fragments.Fragment
 import edu.ucandroid.weathernotice.fragments.ListFragment
 import edu.ucandroid.weathernotice.ui.main.MainFragment
 import edu.ucandroid.weathernotice.ui.main.MainViewModel
+import edu.ucandroid.weathernotice.utilities.NotificationUtilities
 import kotlinx.android.synthetic.main.main_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var detector: GestureDetectorCompat
     private lateinit var listFragment: ListFragment
     private lateinit var mainFragment: MainFragment
-
+   // private val mNotificationTime = Calendar.getInstance().timeInMillis
+    private var mNotified = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -36,7 +41,16 @@ class MainActivity : AppCompatActivity() {
         }
         detector = GestureDetectorCompat(this,WeatherGestureListener())
     }
-
+    fun notifyStuff(){
+        var notificationInfo: ArrayList<Reminder> = ArrayList()
+        var notificationTimeToGo: String
+        notificationInfo = mainFragment.readFireStoreData()
+        //Testing to ensure time gets passed for notification time first
+        notificationTimeToGo = notificationInfo[3].toString()
+        if (!mNotified) {
+            NotificationUtilities().setNotification(notificationTimeToGo.toLong(), this@MainActivity)
+        }
+    }
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return if (detector.onTouchEvent((event))){
             true

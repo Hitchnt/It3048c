@@ -331,7 +331,7 @@ class MainFragment : Fragment() {
     }
 
 
-    fun readFireStoreData(){
+    fun readFireStoreData() : ArrayList<Reminder>{
         var userFirebaseData = ArrayList<Reminder>()
         // Create a reference to the cities collection
         val dba = FirebaseFirestore.getInstance()
@@ -353,17 +353,19 @@ class MainFragment : Fragment() {
                                 alertTime = document.data["AlertTime"].toString(),
                                 typeOfWeather = document.data["TypeOfWeather"].toString(),
                                 message = document.data["Message"].toString(),
-                                userID = document.data["UserID"].toString()
+                                userID = document.data["UserID"].toString(),
+                                inequality = document.data["inequality"].toString()
                         )
                         userFirebaseData.add(thisthing)
                     }
                 }.addOnSuccessListener {
                     adamslogic(userFirebaseData)
+                //Call NotifyStuff from activity here!
                 }
                 .addOnFailureListener { exception ->
                     Log.w(TAG, "Error getting documents: ", exception)
                 }
-        //adamslogic(userFirebaseData)
+        return userFirebaseData
 
 /**
         val db = FirebaseFirestore.getInstance()
@@ -383,7 +385,7 @@ class MainFragment : Fragment() {
     }
 
     fun adamslogic(userFirebaseData: ArrayList<Reminder>) {
-
+    userFirebaseData[0]
     }
 
 
