@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private  lateinit var detector: GestureDetectorCompat
     private lateinit var listFragment: ListFragment
     private lateinit var mainFragment: MainFragment
-   // private val mNotificationTime = Calendar.getInstance().timeInMillis
+    private val mNotificationTime = Calendar.getInstance().timeInMillis
     private var mNotified = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,14 +41,35 @@ class MainActivity : AppCompatActivity() {
         }
         detector = GestureDetectorCompat(this,WeatherGestureListener())
     }
-    fun notifyStuff(){
-        var notificationInfo: ArrayList<Reminder> = ArrayList()
+    fun notifyStuff(fireBaseInfo: ArrayList<Reminder>){
+        var notificationInfo: ArrayList<Reminder> = fireBaseInfo
         var notificationTimeToGo: String
-        notificationInfo = mainFragment.readFireStoreData()
+        var i=0;
+      //  notificationInfo = mainFragment.readFireStoreData()
         //Testing to ensure time gets passed for notification time first
-        notificationTimeToGo = notificationInfo[3].toString()
-        if (!mNotified) {
-            NotificationUtilities().setNotification(notificationTimeToGo.toLong(), this@MainActivity)
+        //notificationTimeToGo = notificationInfo[3].toString()
+        //for (i < notificationInfo.size; i++){
+
+
+       // }
+       /* notificationInfo.forEach(){
+        if(it.alertTime.isNotEmpty()){
+            var alertTimeHour = it.alertTime.substringBefore(":")
+            var alertTimeMin = it.alertTime.substringAfter(":")
+            var alertTimeinMillis = (alertTimeHour.toInt() * 60 + alertTimeMin.toInt()) * 60 * 1000
+            NotificationUtilities().setNotification(alertTimeinMillis.toLong(), this@MainActivity)
+            }
+        }*/
+        notificationInfo.forEach {
+            if (it.alertTime.isNotEmpty()) {
+
+                val time = it.alertTime;
+                val sdf =  SimpleDateFormat("H:mm");
+                val dateObj = sdf.parse(time);
+                val milliseconds = dateObj.time
+
+                NotificationUtilities().setNotification(milliseconds.toLong(), this@MainActivity)
+            }
         }
     }
     override fun onTouchEvent(event: MotionEvent?): Boolean {

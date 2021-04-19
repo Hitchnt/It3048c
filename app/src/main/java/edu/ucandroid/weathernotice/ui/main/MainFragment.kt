@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -196,6 +197,7 @@ class MainFragment : Fragment() {
         btnCompareMenu.visibility = View.VISIBLE
         tTemperature.visibility = View.VISIBLE
         btnMore.visibility = View.VISIBLE
+        Toast.makeText(context, Calendar.getInstance().timeInMillis.toString(), Toast.LENGTH_SHORT).show()
     }
 
     fun hideTemp(){
@@ -204,6 +206,7 @@ class MainFragment : Fragment() {
         btnCompareMenu.visibility = View.GONE
         tTemperature.visibility = View.GONE
         btnMore.visibility = View.GONE
+        Toast.makeText(context, Calendar.getInstance().toString(), Toast.LENGTH_SHORT).show()
 
     }
 
@@ -305,6 +308,7 @@ class MainFragment : Fragment() {
                         , com.google.firebase.auth.FirebaseAuth.getInstance().currentUser.email)
         }
         // viewModel.save(reminder,user!!)
+
     }
 
 
@@ -366,6 +370,8 @@ class MainFragment : Fragment() {
                 }.addOnSuccessListener {
                     adamslogic(userFirebaseData)
                 //Call NotifyStuff from activity here!
+                (activity as MainActivity?)?.notifyStuff(userFirebaseData)
+
                 }
                 .addOnFailureListener { exception ->
                     Log.w(TAG, "Error getting documents: ", exception)
