@@ -211,7 +211,7 @@ class MainFragment : Fragment() {
         numberPicker.maxValue = 80
         numberPicker.minValue = 0
         numberPicker.wrapSelectorWheel = false
-        numberPicker.setOnValueChangedListener { numberPicker, i, i1 -> tTemperature.text = "$i1°F" }
+        numberPicker.setOnValueChangedListener { numberPicker, i, i1 -> tTemperature.text = "$i1℃" }
         d.setPositiveButton("Done") { dialogInterface, i ->
                 println("onClick: " + numberPicker.value)
         }
