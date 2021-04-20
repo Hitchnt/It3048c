@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 import edu.ucandroid.weathernotice.MainActivity
@@ -23,6 +24,7 @@ import edu.ucandroid.weathernotice.ui.main.MainViewModel
 import edu.ucandroid.weathernotice.ui.main.RecyclerAdapter
 import edu.ucandroid.weathernotice.ui.main.Weatherinfo
 import kotlinx.android.synthetic.main.list_fragment.*
+import kotlinx.android.synthetic.main.main_fragment.*
 import java.util.ArrayList
 
 
@@ -51,10 +53,7 @@ class ListFragment : Fragment() {
             (activity as MainActivity).onSwipeRight()
         }
 
-
         LoadRecycerFromFireBase()
-
-
     }
 
 
@@ -71,18 +70,18 @@ class ListFragment : Fragment() {
         weatherList = arrayListOf<Weatherinfo>()
 
         dba.collection("Reminders")
-            .whereEqualTo("UserID", "tyor455@gmail.com")
+            .whereEqualTo("UserID", FirebaseAuth.getInstance().currentUser.email)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
                     var thisthing= Reminder(
-
-                        temperature = document.data["Temperature"].toString()
-
+                        city = document.data["City"].toString(),
+                        temperature = document.data["Temperature"].toString(),
+                        alertTime = document.data["AlertTime"].toString(),
                     )
                     userFirebaseData.add(thisthing)
-                    weatherList.add(Weatherinfo(document.data["Temperature"].toString()))
+                    weatherList.add(Weatherinfo(document.data["City"].toString(), document.data["Temperature"].toString(),document.data["AlertTime"].toString()))
                 }
             }.addOnSuccessListener {
                 val recyclerAdapter = RecyclerAdapter(weatherList)

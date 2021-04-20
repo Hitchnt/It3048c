@@ -15,30 +15,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#63CCFF">
-
-        <ImageView
-            android:id="@+id/imgWeatherinList"
-            android:layout_width="12dp"
-            android:layout_height="115dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/cloud" />
+    <ImageView
+    android:id="@+id/imgWeatherinList"
+    android:layout_width="12dp"
+    android:layout_height="115dp"
+    android:layout_weight="2"
+    app:srcCompat="@drawable/cloud" />
 
         <TextView
             android:id="@+id/lblEventInfo"
-            android:layout_width="wrap_content"
+            android:layout_width="97dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:textColor="#FFFEFE"
-            android:textSize="20sp"
-            android:layout_weight="1" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/lblEventInfo2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="10dp"
+            android:layout_height="97dp"
+            android:layout_weight="1"
             android:textColor="#FFFEFE"
-            android:textSize="20sp"
-            android:layout_weight="1" />
+            android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/lblEventInfo3"
+            android:layout_width="30dp"
+            android:layout_height="98dp"
+            android:layout_weight="1"
+            android:textColor="#FFFEFE"
+            android:textSize="20sp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
