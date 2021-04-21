@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/weather1"
+    android:title="Sunny" />
+    <item
+        android:id="@+id/weather2"
+        android:title="Rainy" />
+    <item
+        android:id="@+id/weather3"
+        android:title="Thunderstorm" />
+    <item
+        android:id="@+id/weather4"
+        android:title="Windy" />
+    <item
+        android:id="@+id/weather5"
+        android:title="Cloudy" />
+</menu>

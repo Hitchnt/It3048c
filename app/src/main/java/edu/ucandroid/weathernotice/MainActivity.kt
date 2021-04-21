@@ -3,6 +3,7 @@ package edu.ucandroid.weathernotice
 import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.Button
@@ -10,18 +11,23 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import edu.ucandroid.weathernotice.fragments.Fragment
 import edu.ucandroid.weathernotice.fragments.ListFragment
-import edu.ucandroid.weathernotice.ui.main.MainFragment
-import edu.ucandroid.weathernotice.ui.main.MainViewModel
+import edu.ucandroid.weathernotice.ui.main.*
+import kotlinx.android.synthetic.main.list_fragment.*
+
 import kotlinx.android.synthetic.main.main_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var detector: GestureDetectorCompat
     private lateinit var listFragment: ListFragment
     private lateinit var mainFragment: MainFragment
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +40,11 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, mainFragment)
                 .commitNow()
         }
+
         detector = GestureDetectorCompat(this,WeatherGestureListener())
     }
+
+
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return if (detector.onTouchEvent((event))){
@@ -55,8 +64,8 @@ class MainActivity : AppCompatActivity() {
             velocityX: Float,
             velocityY: Float
         ): Boolean {
-            var diffX = moveEvent?.x?.minus(downEvent!!.x) ?: 0.0F
-            var diffY = moveEvent?.y?.minus(downEvent!!.y) ?: 0.0F
+            val diffX = moveEvent?.x?.minus(downEvent!!.x) ?: 0.0F
+            val diffY = moveEvent?.y?.minus(downEvent!!.y) ?: 0.0F
 
             return if (Math.abs(diffX) > Math.abs(diffY)){
                 //when swipe parallel
@@ -95,15 +104,17 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Top Swip", Toast.LENGTH_LONG).show()
     }
     //swipe left to show the list screen
-    private fun onSwipeLeft() {
+    internal fun onSwipeLeft() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, listFragment)
             .commitNow()
     }
     //swipe right to show the main screen
-    private fun onSwipeRight(){
+    internal fun onSwipeRight(){
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, mainFragment)
             .commitNow()
     }
+
+
 }

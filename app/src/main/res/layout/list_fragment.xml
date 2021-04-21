@@ -7,33 +7,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ListFragment">
 
-    <Button
-        android:id="@+id/btnFah"
-        android:layout_width="55dp"
-        android:layout_height="60dp"
-        android:text="℉"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
-        android:id="@+id/split"
+        android:id="@+id/listTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="/"
+        android:text="Weather Notice"
         android:textSize="40sp"
-        app:layout_constraintStart_toEndOf="@+id/btnFah"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnCel"
-        android:layout_width="55dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="5dp"
-        android:text="℃"
-        android:textSize="30sp"
-        app:layout_constraintStart_toEndOf="@+id/split"
+        app:layout_constraintEnd_toStartOf="@+id/btnAdd"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -44,12 +25,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_add" />
 
-    <ListView
-        android:id="@+id/listOfWeather"
-        android:layout_width="390dp"
-        android:layout_height="591dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyEvents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="10dp"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCel" />
+        app:layout_constraintTop_toBottomOf="@+id/listTitle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
