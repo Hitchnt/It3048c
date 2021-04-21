@@ -1,6 +1,10 @@
 package edu.ucandroid.weathernotice
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.TimePickerDialog
+import android.content.Context
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.Time
@@ -9,16 +13,25 @@ import android.view.MotionEvent
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
 import edu.ucandroid.weathernotice.dto.Reminder
 import edu.ucandroid.weathernotice.fragments.Fragment
 import edu.ucandroid.weathernotice.fragments.ListFragment
+//import edu.ucandroid.weathernotice.service.NotificationService.Companion.CHANNEL_ID
 import edu.ucandroid.weathernotice.ui.main.MainFragment
 import edu.ucandroid.weathernotice.ui.main.MainViewModel
 import edu.ucandroid.weathernotice.utilities.NotificationUtilities
 import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalTime
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -26,8 +39,8 @@ class MainActivity : AppCompatActivity() {
     private  lateinit var detector: GestureDetectorCompat
     private lateinit var listFragment: ListFragment
     private lateinit var mainFragment: MainFragment
-    private val mNotificationTime = Calendar.getInstance().timeInMillis
-    private var mNotified = false
+    private  var notificationId = 101
+    private  var CHANNEL_ID= "channelis_example_01"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -40,8 +53,75 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
         }
         detector = GestureDetectorCompat(this,WeatherGestureListener())
+ }
+
+
+    private fun createNotificationchannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ){
+            val name = "notification title"
+            val descriptionText = "description Text"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID,name,importance).apply {
+                description=descriptionText
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
-    fun notifyStuff(fireBaseInfo: ArrayList<Reminder>){
+    fun sendNotification(fireBaseInfo: ArrayList<Reminder>){
+        var notificationInfo: ArrayList<Reminder> = fireBaseInfo
+        createNotificationchannel()
+        var i : Long = 0
+        notificationInfo.forEach {
+            i++
+            var notificationTitle = "Your Weather Notification: "+ it.alertTime
+            var notificationMessage = ""
+
+            if(it.alertTime == null || it.alertTime.contains("_")){
+                return@forEach
+            }
+            if (it.inequality !=null || it.temperature !=null || "_" !in it.temperature || "_" !in it.inequality){
+                notificationMessage = "The temperature is " + it.inequality + " " + it.temperature + "° "
+            }
+            if(it.typeOfWeather != null || "_" !in it.typeOfWeather){
+                notificationMessage = notificationMessage + "The weather is " + it.typeOfWeather
+            }
+            else{
+                return@forEach
+            }
+            val builder = NotificationCompat.Builder(this,CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentTitle(notificationTitle)
+                    .setContentText(notificationMessage)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            with(NotificationManagerCompat.from(this)){
+            CoroutineScope(IO).
+            launch {
+                delay(5000*i)
+                CoroutineScope(Main).launch {
+                    // activefunction()
+                    notify(notificationId,builder.build())
+                  }
+                }
+            }
+        }
+    }
+
+
+
+
+
+/**        val builder = NotificationCompat.Builder(this,CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle(weatherDesc)
+                .setContentText(notificationMessage)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        //if (mainFragment.remindTime == currentTime.toString()){
+        with(NotificationManagerCompat.from(this)){
+            notify(notificationId,builder.build())*/
+            //}
+
+ /*   fun notifyStuff(fireBaseInfo: ArrayList<Reminder>){
         var notificationInfo: ArrayList<Reminder> = fireBaseInfo
         var notificationTimeToGo: String
         var i=0;
@@ -62,16 +142,19 @@ class MainActivity : AppCompatActivity() {
         }*/
         notificationInfo.forEach {
             if (it.alertTime.isNotEmpty()) {
-
+                i += 1
                 val time = it.alertTime;
                 val sdf =  SimpleDateFormat("H:mm");
                 val dateObj = sdf.parse(time);
                 val milliseconds = dateObj.time
-
-                NotificationUtilities().setNotification(milliseconds.toLong(), this@MainActivity)
+                val notifTimer = milliseconds - mNotificationTime
+                if(!mNotified){
+                    NotificationUtilities().setNotification(mNotificationTime+5000, this@MainActivity)
+                }
             }
         }
-    }
+    }*/
+
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return if (detector.onTouchEvent((event))){
             true

@@ -197,7 +197,6 @@ class MainFragment : Fragment() {
         btnCompareMenu.visibility = View.VISIBLE
         tTemperature.visibility = View.VISIBLE
         btnMore.visibility = View.VISIBLE
-        Toast.makeText(context, Calendar.getInstance().timeInMillis.toString(), Toast.LENGTH_SHORT).show()
     }
 
     fun hideTemp(){
@@ -206,7 +205,6 @@ class MainFragment : Fragment() {
         btnCompareMenu.visibility = View.GONE
         tTemperature.visibility = View.GONE
         btnMore.visibility = View.GONE
-        Toast.makeText(context, Calendar.getInstance().toString(), Toast.LENGTH_SHORT).show()
 
     }
 
@@ -348,9 +346,11 @@ class MainFragment : Fragment() {
         val query = citiesRef.whereEqualTo("UserId", "tyor455@gmail.com")
         /** The following query returns all the capital cities: */
         val capitalCities = dba.collection("UserID").whereEqualTo("capital", true)
-
+        if (user ==null){
+            logon()
+        }
         dba.collection("Reminders")
-                .whereEqualTo("UserID", "tyor455@gmail.com")
+                .whereEqualTo("UserID", FirebaseAuth.getInstance().currentUser.email)
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
@@ -370,7 +370,7 @@ class MainFragment : Fragment() {
                 }.addOnSuccessListener {
                     adamslogic(userFirebaseData)
                 //Call NotifyStuff from activity here!
-                (activity as MainActivity?)?.notifyStuff(userFirebaseData)
+                (activity as MainActivity?)?.sendNotification(userFirebaseData)
 
                 }
                 .addOnFailureListener { exception ->
