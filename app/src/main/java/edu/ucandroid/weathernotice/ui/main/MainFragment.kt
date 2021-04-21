@@ -331,7 +331,7 @@ class MainFragment : Fragment() {
     }
 
 // delete if not used
-    fun readFireStoreData(){
+    fun readFireStoreData() : ArrayList<Reminder>{
         var userFirebaseData = ArrayList<Reminder>()
         // Create a reference to the cities collection
         val dba = FirebaseFirestore.getInstance()
@@ -358,12 +358,12 @@ class MainFragment : Fragment() {
                         userFirebaseData.add(thisthing)
                     }
                 }.addOnSuccessListener {
-
+                (activity as MainActivity?)?.sendNotification(userFirebaseData)
                 }
                 .addOnFailureListener { exception ->
                     Log.w(TAG, "Error getting documents: ", exception)
                 }
-
+    return userFirebaseData
     }
 
     fun adamslogic(userFirebaseData: ArrayList<Reminder>) {
