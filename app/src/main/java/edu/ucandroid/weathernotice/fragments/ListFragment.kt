@@ -63,7 +63,7 @@ class ListFragment : Fragment() {
         rcyEvents.itemAnimator = DefaultItemAnimator()
 
 
-        var userFirebaseData = ArrayList<Reminder>()
+        val userFirebaseData = ArrayList<Reminder>()
         // Create a reference to the cities collection
         val dba = FirebaseFirestore.getInstance()
 
@@ -97,44 +97,6 @@ class ListFragment : Fragment() {
 
 
     }
-
-
-
-
-
-
-    inner class EventAdapter(val events: List<Event>, val itemLayout: Int) : RecyclerView.Adapter<EventViewHolder>(){
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(itemLayout, parent, false)
-            return EventViewHolder(view)
-        }
-
-
-        override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-            val event = events.get(position)
-            holder.updateEvent(event)
-        }
-
-        override fun getItemCount(): Int {
-            return events.size
-        }
-
-    }
-    
-
-    inner class EventViewHolder (itemVIew : View) : RecyclerView.ViewHolder(itemVIew) {
-        private var imgWeatherinList : ImageView = itemView.findViewById(R.id.imgWeatherinList)
-        private var lblEventInfo : TextView = itemVIew.findViewById(R.id.lblEventInfo)
-
-        fun  updateEvent (event : Event){
-            lblEventInfo.text = event.toString()
-            
-        }
-    }
-
-
-
 
 }
 

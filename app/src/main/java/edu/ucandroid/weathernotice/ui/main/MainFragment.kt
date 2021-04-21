@@ -85,7 +85,7 @@ class MainFragment : Fragment() {
 
         btnLocation.setOnClickListener {
             getLocation()
-            readFireStoreData()
+           // readFireStoreData()
         }
         btnSave.setOnClickListener {
             saveString()
@@ -211,7 +211,8 @@ class MainFragment : Fragment() {
         numberPicker.maxValue = 80
         numberPicker.minValue = 0
         numberPicker.wrapSelectorWheel = false
-        numberPicker.setOnValueChangedListener { numberPicker, i, i1 -> tTemperature.text = "$i1℃" }
+        //numberPicker.setOnValueChangedListener { numberPicker, i, i1 -> tTemperature.text = "$i1℃" }
+        numberPicker.setOnValueChangedListener { numberPicker, i, i1 -> tTemperature.text = "$i1" }
         d.setPositiveButton("Done") { dialogInterface, i ->
                 println("onClick: " + numberPicker.value)
         }
@@ -294,7 +295,7 @@ class MainFragment : Fragment() {
                 ,tTemperature.text.toString()
                 ,tTime.text.toString()
                 ,tWeather.text.toString()
-                ,"Hey it happening"
+                ,""
                 ,FirebaseAuth.getInstance().currentUser.email)
         // viewModel.save(reminder,user!!)
         //rcyEvents.adapter?.notifyDataSetChanged()
@@ -326,10 +327,10 @@ class MainFragment : Fragment() {
             .addOnFailureListener {
                 Toast.makeText(activity, "record added", Toast.LENGTH_SHORT).show()
             }
-         //readFireStoreData()
+
     }
 
-
+// delete if not used
     fun readFireStoreData(){
         var userFirebaseData = ArrayList<Reminder>()
         // Create a reference to the cities collection
@@ -363,8 +364,6 @@ class MainFragment : Fragment() {
                     Log.w(TAG, "Error getting documents: ", exception)
                 }
 
-
-
     }
 
     fun adamslogic(userFirebaseData: ArrayList<Reminder>) {
@@ -384,9 +383,10 @@ class MainFragment : Fragment() {
 
     fun updateLocation() {
         var locationRequest = LocationRequest()
-        locationRequest.priority = LocationRequest.PRIORITY_LOW_POWER
-        locationRequest.interval = 60000
-        locationRequest.fastestInterval = 5000
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 0
+        locationRequest.fastestInterval = 0
+        locationRequest.numUpdates = 1
 
         mFusedLocationProviderClient = FusedLocationProviderClient(context!!)
 

@@ -30,19 +30,12 @@ class RecyclerAdapter ( var userList: ArrayList<Weatherinfo>) :
 
         fun bind(userinfo: Weatherinfo) {
             itemView.lblEventInfo.text = userinfo.city
-            itemView.lblEventInfo2.text = userinfo.temperature
+            itemView.lblEventInfo2.text = userinfo.temperature + "℃"
             itemView.lblEventInfo3.text = userinfo.time
 
-            //itemView.lblEventInfo2.text = userinfo.temperature
 
-           // itemView.imgWeatherinList.setImageDrawable(R.drawable.ic_add.toDrawable())
-
-            //itemView.ratingTextView.text = userinfo.rating.toString()
         }
     }
 
-    interface OnItemClickListener {
-        fun onClick(position: Int)
-        fun onLongClick(position: Int)
-    }
+
 }

@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var listFragment: ListFragment
     private lateinit var mainFragment: MainFragment
 
-    lateinit var weatherList: ArrayList<Weatherinfo>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,15 +40,6 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, mainFragment)
                 .commitNow()
         }
-
-
-/**
-        rcyEvents.apply {
-            adapter = recyclerAdapter
-            addItemDecoration(DividerItemDecoration(this@MainActivity, DividerItemDecoration.VERTICAL))
-            setHasFixedSize(true)
-        }
-        */
 
         detector = GestureDetectorCompat(this,WeatherGestureListener())
     }
@@ -73,8 +64,8 @@ class MainActivity : AppCompatActivity() {
             velocityX: Float,
             velocityY: Float
         ): Boolean {
-            var diffX = moveEvent?.x?.minus(downEvent!!.x) ?: 0.0F
-            var diffY = moveEvent?.y?.minus(downEvent!!.y) ?: 0.0F
+            val diffX = moveEvent?.x?.minus(downEvent!!.x) ?: 0.0F
+            val diffY = moveEvent?.y?.minus(downEvent!!.y) ?: 0.0F
 
             return if (Math.abs(diffX) > Math.abs(diffY)){
                 //when swipe parallel
