@@ -1,29 +1,23 @@
 package edu.ucandroid.weathernotice
 
+//import edu.ucandroid.weathernotice.service.NotificationService.Companion.CHANNEL_ID
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.format.Time
 import android.view.GestureDetector
 import android.view.MotionEvent
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.ViewModelProvider
 import edu.ucandroid.weathernotice.dto.Reminder
-import edu.ucandroid.weathernotice.fragments.Fragment
 import edu.ucandroid.weathernotice.fragments.ListFragment
-//import edu.ucandroid.weathernotice.service.NotificationService.Companion.CHANNEL_ID
 import edu.ucandroid.weathernotice.ui.main.MainFragment
 import edu.ucandroid.weathernotice.ui.main.MainViewModel
-import edu.ucandroid.weathernotice.utilities.NotificationUtilities
 import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -31,9 +25,9 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalTime
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var detector: GestureDetectorCompat
@@ -52,7 +46,9 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, mainFragment)
                 .commitNow()
         }
-        detector = GestureDetectorCompat(this,WeatherGestureListener())
+        detector = GestureDetectorCompat(this, WeatherGestureListener())
+
+        loop()
  }
 
 
@@ -61,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             val name = "notification title"
             val descriptionText = "description Text"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID,name,importance).apply {
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description=descriptionText
             }
             val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -72,37 +68,64 @@ class MainActivity : AppCompatActivity() {
         var notificationInfo: ArrayList<Reminder> = fireBaseInfo
         createNotificationchannel()
         var i : Long = 0
-        notificationInfo.forEach {
-            i++
-            var notificationTitle = "Your Weather Notification: "+ it.alertTime
-            var notificationMessage = ""
 
-            if(it.alertTime == null || it.alertTime.contains("_")){
-                return@forEach
-            }
-            if (it.inequality !=null || it.temperature !=null || "_" !in it.temperature || "_" !in it.inequality){
-                notificationMessage = "The temperature is " + it.inequality + " " + it.temperature + "° "
-            }
-            if(it.typeOfWeather != null || "_" !in it.typeOfWeather){
-                notificationMessage = notificationMessage + "The weather is " + it.typeOfWeather
-            }
-            else{
-                return@forEach
-            }
-            val builder = NotificationCompat.Builder(this,CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setContentTitle(notificationTitle)
-                    .setContentText(notificationMessage)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            with(NotificationManagerCompat.from(this)){
-            CoroutineScope(IO).
-            launch {
-                delay(5000*i)
-                CoroutineScope(Main).launch {
-                    // activefunction()
-                    notify(notificationId,builder.build())
-                  }
+
+            notificationInfo.forEach {
+                val time = it.alertTime;
+                val sdf =  SimpleDateFormat("H:mm");
+                val dateObj = sdf.parse(time);
+
+
+                var timenow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
+
+
+            if(timenow == time){
+
+
+                    i++
+                    var notificationTitle = "Your Weather Notification: " + it.alertTime
+                    var notificationMessage = ""
+
+                    if (it.alertTime == null || it.alertTime.contains("_")) {
+                        return@forEach
+                    }
+                    if (it.inequality != null || it.temperature != null || "_" !in it.temperature || "_" !in it.inequality) {
+                        notificationMessage = "The temperature is " + it.inequality + " " + it.temperature + "° "
+                    }
+                    if (it.typeOfWeather != null || "_" !in it.typeOfWeather) {
+                        notificationMessage = notificationMessage + "The weather is " + it.typeOfWeather
+                    } else {
+                        return@forEach
+                    }
+                    val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+                            .setSmallIcon(R.drawable.ic_launcher_foreground)
+                            .setContentTitle(notificationTitle)
+                            .setContentText(notificationMessage)
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    with(NotificationManagerCompat.from(this)) {
+                        CoroutineScope(IO).launch {
+                            delay(60000 )
+                            CoroutineScope(Main).launch {
+                                // activefunction()
+                                notify(notificationId, builder.build())
+                            }
+                        }
+                    }
                 }
+            }
+
+    }
+
+
+
+    private fun loop() {
+        CoroutineScope(IO).
+        launch {
+            delay(60000)
+            CoroutineScope(Main).launch {
+                sendNotification(mainFragment.readFireStoreData())
+                //mainFragment.readFireStoreData()
+                loop()
             }
         }
     }
@@ -168,10 +191,10 @@ class MainActivity : AppCompatActivity() {
         private val SWIP_THRESHOLD = 250
         private val SWIP_VELOCITY_THRESHOLD = 250
         override fun onFling(
-            downEvent: MotionEvent?,
-            moveEvent: MotionEvent?,
-            velocityX: Float,
-            velocityY: Float
+                downEvent: MotionEvent?,
+                moveEvent: MotionEvent?,
+                velocityX: Float,
+                velocityY: Float
         ): Boolean {
             var diffX = moveEvent?.x?.minus(downEvent!!.x) ?: 0.0F
             var diffY = moveEvent?.y?.minus(downEvent!!.y) ?: 0.0F

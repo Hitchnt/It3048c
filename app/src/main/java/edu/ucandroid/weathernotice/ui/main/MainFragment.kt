@@ -90,7 +90,7 @@ class MainFragment : Fragment() {
 
         btnLocation.setOnClickListener {
             getLocation()
-            readFireStoreData()
+
         }
         btnSave.setOnClickListener {
             saveString()
@@ -343,10 +343,10 @@ class MainFragment : Fragment() {
         // Create a reference to the cities collection
         val dba = FirebaseFirestore.getInstance()
         val citiesRef = dba.collection("Reminders")
-        val query = citiesRef.whereEqualTo("UserId", "tyor455@gmail.com")
+
         /** The following query returns all the capital cities: */
         val capitalCities = dba.collection("UserID").whereEqualTo("capital", true)
-        if (user ==null){
+        if (FirebaseAuth.getInstance().currentUser.email ==null){
             logon()
         }
         dba.collection("Reminders")
