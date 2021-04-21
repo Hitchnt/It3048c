@@ -85,12 +85,19 @@ class MainActivity : AppCompatActivity() {
                     i++
                     var notificationTitle = "Your Weather Notification: " + it.alertTime
                     var notificationMessage = ""
+                    var inequality = ""
 
                     if (it.alertTime == null || it.alertTime.contains("_")) {
                         return@forEach
                     }
                     if (it.inequality != null || it.temperature != null || "_" !in it.temperature || "_" !in it.inequality) {
-                        notificationMessage = "The temperature is " + it.inequality + " " + it.temperature + "° "
+                        if(it.inequality == ">"){
+                            inequality = "greater than "
+                        }
+                        else {
+                            inequality = "less than "
+                        }
+                        notificationMessage = "The temperature is " + inequality + "the set temp of " + it.temperature + "° C "
                     }
                     if (it.typeOfWeather != null || "_" !in it.typeOfWeather) {
                         notificationMessage = notificationMessage + "The weather is " + it.typeOfWeather
