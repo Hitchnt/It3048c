@@ -59,15 +59,6 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        //Not yet implemented
-        /* val queue = Volley.newRequestQueue(getActivity());
-         val url = "https://api.weatherbit.io/v2.0/current?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA";
-         val urltmrw = "https://api.weatherbit.io/v2.0/forecast/hourly?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA&hours=24";
-         val urlomrw = "https://api.weatherbit.io/v2.0/forecast/hourly?key=66af4499735e4bcc914957a0354de0b2&city=Cincinnati&country=USA";
-         val sdf_to = SimpleDateFormat("EEEE");
-         val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");*/
-
-
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
@@ -85,7 +76,6 @@ class MainFragment : Fragment() {
 
         btnLocation.setOnClickListener {
             getLocation()
-           // readFireStoreData()
         }
         btnSave.setOnClickListener {
             saveString()
@@ -211,7 +201,6 @@ class MainFragment : Fragment() {
         numberPicker.maxValue = 80
         numberPicker.minValue = 0
         numberPicker.wrapSelectorWheel = false
-        //numberPicker.setOnValueChangedListener { numberPicker, i, i1 -> tTemperature.text = "$i1℃" }
         numberPicker.setOnValueChangedListener { numberPicker, i, i1 -> tTemperature.text = "$i1" }
         d.setPositiveButton("Done") { dialogInterface, i ->
                 println("onClick: " + numberPicker.value)
@@ -239,8 +228,6 @@ class MainFragment : Fragment() {
         val cityName = cityCountrySplit[0]
         val countryCode = cityCountrySplit[1]
         val url = "https://api.weatherbit.io/v2.0/current?key=66af4499735e4bcc914957a0354de0b2&city=$cityName&country=$countryCode";
-        val sdf_to = SimpleDateFormat("EEEE")
-        val sdf_from = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
                 Response.Listener { response ->
@@ -262,6 +249,7 @@ class MainFragment : Fragment() {
                     showCity.text = data.getString("city_name").toString()
                     pressure.text = data.getString("pres").toString() + " millibars"
                     windSpeed.text = data.getString("wind_spd").toString() + " m/s"
+                    showDateTime.text = data.getString("ob_time").toString()
 
 
                 },
@@ -297,8 +285,6 @@ class MainFragment : Fragment() {
                 ,tWeather.text.toString()
                 ,""
                 ,FirebaseAuth.getInstance().currentUser.email)
-        // viewModel.save(reminder,user!!)
-        //rcyEvents.adapter?.notifyDataSetChanged()
          }
     }
 
@@ -330,18 +316,13 @@ class MainFragment : Fragment() {
 
     }
 
-// delete if not used
     fun readFireStoreData() : ArrayList<Reminder>{
         var userFirebaseData = ArrayList<Reminder>()
         // Create a reference to the cities collection
         val dba = FirebaseFirestore.getInstance()
-        val citiesRef = dba.collection("Reminders")
-        val query = citiesRef.whereEqualTo("UserId", "tyor455@gmail.com")
-        /** The following query returns all the capital cities: */
-        val capitalCities = dba.collection("UserID").whereEqualTo("capital", true)
 
         dba.collection("Reminders")
-                .whereEqualTo("UserID", "tyor455@gmail.com")
+                .whereEqualTo("UserID", FirebaseAuth.getInstance().currentUser.email)
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
@@ -364,11 +345,6 @@ class MainFragment : Fragment() {
                     Log.w(TAG, "Error getting documents: ", exception)
                 }
     return userFirebaseData
-    }
-
-    fun adamslogic(userFirebaseData: ArrayList<Reminder>) {
-
-
     }
 
 

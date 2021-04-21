@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity() {
             delay(60000)
             CoroutineScope(Main).launch {
                 sendNotification(mainFragment.readFireStoreData())
-                //mainFragment.readFireStoreData()
                 loop()
             }
         }
@@ -91,14 +90,8 @@ class MainActivity : AppCompatActivity() {
 
 
         notificationInfo.forEach {
-            val time = it.alertTime;
-            val sdf =  SimpleDateFormat("H:mm");
-            val dateObj = sdf.parse(time);
-
-
+            val time = it.alertTime
             var timenow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
-
-
             if(timenow == time){
 
 
@@ -133,7 +126,6 @@ class MainActivity : AppCompatActivity() {
                     CoroutineScope(IO).launch {
                         delay(60000 )
                         CoroutineScope(Main).launch {
-                            // activefunction()
                             notify(notificationId, builder.build())
                         }
                     }
