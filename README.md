@@ -1,5 +1,5 @@
 # WeatherNotice
-Oliver Lu
+Tyler Hitchner, Adam Holt, Oliver Lu
 
 ## Introduction
 Ever need to know if you need to put the pool cover on so it is not too cold to swim later on or when alert to bring the plants if it's too cold outside. Well with WeatherNotice, it will solve those issues for you.  
